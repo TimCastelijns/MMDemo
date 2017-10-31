@@ -2,6 +2,7 @@ package com.castelijns.mmdemo.albums;
 
 import com.castelijns.mmdemo.models.Album;
 
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -32,6 +33,7 @@ public class AlbumsPresenter implements AlbumsContract.Presenter {
 
                     @Override
                     public void onNext(List<Album> albums) {
+                        Collections.sort(albums);
                         view.showAlbums(albums);
                     }
 

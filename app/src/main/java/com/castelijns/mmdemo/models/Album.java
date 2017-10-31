@@ -1,6 +1,8 @@
 package com.castelijns.mmdemo.models;
 
-public class Album {
+import android.support.annotation.NonNull;
+
+public class Album implements Comparable<Album> {
 
     private int id;
     private int userId;
@@ -28,5 +30,10 @@ public class Album {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public int compareTo(@NonNull Album o) {
+        return title.compareTo(o.getTitle());
     }
 }
