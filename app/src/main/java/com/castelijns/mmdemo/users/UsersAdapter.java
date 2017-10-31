@@ -1,6 +1,7 @@
 package com.castelijns.mmdemo.users;
 
 import android.content.Context;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         @BindView(R.id.tv_username)
         TextView tvUsername;
 
+        @BindView(R.id.tv_email)
+        TextView tvEmail;
+
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -50,12 +54,19 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         final User user = dataSet.get(position);
         holder.tvName.setText(user.getName());
         holder.tvUsername.setText(user.getUsername());
+        holder.tvEmail.setText(user.getEmail());
 
         holder.itemView.setOnClickListener(v -> {
             if (itemClickListener != null) {
-                itemClickListener.onClick(user);
+                itemClickListener.onClick(user, holder.tvUsername, holder.tvEmail);
             }
         });
+
+        // For shared element transitions.
+        ViewCompat.setTransitionName(holder.tvUsername, String.format(
+                "%s.%s","username", user.getUsername()));
+        ViewCompat.setTransitionName(holder.tvEmail, String.format(
+                "%s.%s", "email", user.getName()));
     }
 
     @Override
@@ -68,6 +79,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     }
 
     interface ItemClickListener {
-        void onClick(User user);
+        void onClick(User user, TextView tvUsername, TextView tvEmail);
     }
 }

@@ -1,5 +1,7 @@
 package com.castelijns.mmdemo.users;
 
+import android.widget.TextView;
+
 import com.castelijns.mmdemo.models.User;
 
 import java.util.Collections;
@@ -55,7 +57,7 @@ public class UsersPresenter implements UsersContract.Presenter {
     }
 
     @Override
-    public void onUserClicked(User user) {
-        view.showUserDetail(user);
+    public void onUserClicked(User user, TextView tvUsername, TextView tvEmail) {
+        this.view.showUserDetail(user, tvUsername, tvEmail);
     }
 }

@@ -1,8 +1,10 @@
 package com.castelijns.mmdemo.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-public class User implements Comparable<User> {
+public class User implements Comparable<User>, Parcelable {
 
     private int id;
     private String name;
@@ -12,6 +14,9 @@ public class User implements Comparable<User> {
     private String phone;
     private String website;
     private Company company;
+
+    public User() {
+    }
 
     public int getId() {
         return id;
@@ -81,4 +86,44 @@ public class User implements Comparable<User> {
     public int compareTo(@NonNull User o) {
         return name.compareTo(o.getName());
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.username);
+        dest.writeString(this.email);
+        dest.writeParcelable(this.address, flags);
+        dest.writeString(this.phone);
+        dest.writeString(this.website);
+        dest.writeParcelable(this.company, flags);
+    }
+
+    private User(Parcel in) {
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.username = in.readString();
+        this.email = in.readString();
+        this.address = in.readParcelable(Address.class.getClassLoader());
+        this.phone = in.readString();
+        this.website = in.readString();
+        this.company = in.readParcelable(Company.class.getClassLoader());
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

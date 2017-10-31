@@ -3,11 +3,15 @@ package com.castelijns.mmdemo.users;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.castelijns.mmdemo.R;
 import com.castelijns.mmdemo.app.BaseFragment;
@@ -20,6 +24,10 @@ import java.util.List;
 import butterknife.BindView;
 
 public class UsersFragment extends BaseFragment implements UsersContract.View {
+
+    public static final String EXTRA_USER = "extra_user";
+    public static final String EXTRA_USERNAME_TRANSITION = "extra_username_transition";
+    public static final String EXTRA_EMAIL_TRANSITION = "extra_email_transition";
 
     @BindView(R.id.rv_users)
     RecyclerView rvUsers;
@@ -48,7 +56,8 @@ public class UsersFragment extends BaseFragment implements UsersContract.View {
 
         users = new ArrayList<>();
         adapter = new UsersAdapter(getContext(), users);
-        adapter.setItemClickListener(user -> presenter.onUserClicked(user));
+        adapter.setItemClickListener((user, tvUsername, tvEmail) -> presenter.onUserClicked(
+                user, tvUsername, tvEmail));
 
         rvUsers.setLayoutManager(new LinearLayoutManager(getContext()));
         rvUsers.setHasFixedSize(true);
@@ -64,7 +73,21 @@ public class UsersFragment extends BaseFragment implements UsersContract.View {
     }
 
     @Override
-    public void showUserDetail(User user) {
-        startActivity(new Intent(getContext(), UserDetailActivity.class));
+    public void showUserDetail(User user, TextView tvUsername, TextView tvEmail) {
+        String transitionUsername = ViewCompat.getTransitionName(tvUsername);
+        String transitionEmail = ViewCompat.getTransitionName(tvEmail);
+
+        Intent intent = new Intent(getContext(), UserDetailActivity.class);
+        intent.putExtra(EXTRA_USER, user);
+        intent.putExtra(EXTRA_USERNAME_TRANSITION, transitionUsername);
+        intent.putExtra(EXTRA_EMAIL_TRANSITION, transitionEmail);
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                getActivity(),
+                Pair.create(tvUsername, transitionUsername),
+                Pair.create(tvEmail, transitionEmail)
+        );
+
+        startActivity(intent, options.toBundle());
     }
 }
