@@ -19,6 +19,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
     private LayoutInflater inflater;
     private List<User> dataSet;
+    private ItemClickListener itemClickListener;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_name)
@@ -45,13 +46,28 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(UsersAdapter.ViewHolder holder, int position) {
-        holder.tvName.setText(dataSet.get(position).getName());
-        holder.tvUsername.setText(dataSet.get(position).getUsername());
+    public void onBindViewHolder(UsersAdapter.ViewHolder holder, final int position) {
+        final User user = dataSet.get(position);
+        holder.tvName.setText(user.getName());
+        holder.tvUsername.setText(user.getUsername());
+
+        holder.itemView.setOnClickListener(v -> {
+            if (itemClickListener != null) {
+                itemClickListener.onClick(user);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return dataSet.size();
+    }
+
+    void setItemClickListener(ItemClickListener listener) {
+        itemClickListener = listener;
+    }
+
+    interface ItemClickListener {
+        void onClick(User user);
     }
 }

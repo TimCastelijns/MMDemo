@@ -53,4 +53,9 @@ public class UsersPresenter implements UsersContract.Presenter {
     public void stop() {
 
     }
+
+    @Override
+    public void onUserClicked(User user) {
+        view.showUserDetail(user);
+    }
 }

@@ -10,9 +10,10 @@ public interface UsersContract {
 
     interface View extends BaseView {
         void showUsers(List<User> users);
+        void showUserDetail(User user);
     }
 
     interface Presenter extends BasePresenter {
-
+        void onUserClicked(User user);
     }
 }

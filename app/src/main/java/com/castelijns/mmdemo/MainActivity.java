@@ -4,17 +4,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.castelijns.mmdemo.albums.AlbumsFragment;
+import com.castelijns.mmdemo.app.BaseActivity;
 import com.castelijns.mmdemo.photos.PhotosFragment;
 import com.castelijns.mmdemo.users.UsersFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @BindView(R.id.bnv)
     BottomNavigationView bnv;

@@ -1,5 +1,6 @@
 package com.castelijns.mmdemo.users;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import com.castelijns.mmdemo.R;
 import com.castelijns.mmdemo.app.BaseFragment;
 import com.castelijns.mmdemo.models.User;
+import com.castelijns.mmdemo.user_detail.UserDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +48,8 @@ public class UsersFragment extends BaseFragment implements UsersContract.View {
 
         users = new ArrayList<>();
         adapter = new UsersAdapter(getContext(), users);
+        adapter.setItemClickListener(user -> presenter.onUserClicked(user));
+
         rvUsers.setLayoutManager(new LinearLayoutManager(getContext()));
         rvUsers.setHasFixedSize(true);
         rvUsers.setAdapter(adapter);
@@ -57,5 +61,10 @@ public class UsersFragment extends BaseFragment implements UsersContract.View {
     public void showUsers(List<User> users) {
         this.users.addAll(users);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showUserDetail(User user) {
+        startActivity(new Intent(getContext(), UserDetailActivity.class));
     }
 }
