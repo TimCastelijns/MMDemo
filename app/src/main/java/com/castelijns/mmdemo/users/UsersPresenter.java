@@ -30,7 +30,7 @@ public class UsersPresenter implements UsersContract.Presenter {
 
                     @Override
                     public void onNext(List<User> users) {
-
+                        view.showUsers(users);
                     }
 
                     @Override
