@@ -1,6 +1,7 @@
 package com.castelijns.mmdemo.network;
 
 import com.castelijns.mmdemo.models.Album;
+import com.castelijns.mmdemo.users.User;
 
 import java.util.List;
 
@@ -11,4 +12,7 @@ public interface ApiService {
 
     @GET("albums")
     Observable<List<Album>> getAllAlbums();
+
+    @GET("users")
+    Observable<List<User>> getAllUsers();
 }
