@@ -32,7 +32,7 @@ public class AlbumsPresenter implements AlbumsContract.Presenter {
 
                     @Override
                     public void onNext(List<Album> albums) {
-
+                        view.showAlbums(albums);
                     }
 
                     @Override
