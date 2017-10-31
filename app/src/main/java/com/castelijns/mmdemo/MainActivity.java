@@ -3,13 +3,25 @@ package com.castelijns.mmdemo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
+
+import com.castelijns.mmdemo.albums.AlbumsFragment;
+import com.castelijns.mmdemo.photos.PhotosFragment;
+import com.castelijns.mmdemo.users.UsersFragment;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
+    @BindView(R.id.bnv)
+    BottomNavigationView bnv;
+
+    private AlbumsFragment albumsFragment;
+    private PhotosFragment photosFragment;
+    private UsersFragment usersFragment;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -18,13 +30,13 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_albums:
-                    mTextMessage.setText(R.string.title_albums);
+                    navigateToAlbums();
                     return true;
                 case R.id.navigation_photos:
-                    mTextMessage.setText(R.string.title_photos);
+                    navigateToPhotos();
                     return true;
                 case R.id.navigation_users:
-                    mTextMessage.setText(R.string.title_users);
+                    navigateToUsers();
                     return true;
             }
             return false;
@@ -35,10 +47,37 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        mTextMessage = findViewById(R.id.message);
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        bnv.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigateToAlbums();
     }
 
+    private void navigateToAlbums() {
+        if (albumsFragment == null) {
+            albumsFragment = new AlbumsFragment();
+        }
+        changeFragment(albumsFragment);
+    }
+
+    private void navigateToPhotos() {
+        if (photosFragment == null) {
+            photosFragment = new PhotosFragment();
+        }
+        changeFragment(photosFragment);
+    }
+
+    private void navigateToUsers() {
+        if (usersFragment == null) {
+            usersFragment = new UsersFragment();
+        }
+        changeFragment(usersFragment);
+    }
+
+    private void changeFragment(Fragment newFragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, newFragment)
+                .commit();
+    }
 }
