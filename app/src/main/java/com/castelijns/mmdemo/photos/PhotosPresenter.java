@@ -32,7 +32,7 @@ public class PhotosPresenter implements PhotosContract.Presenter {
 
                     @Override
                     public void onNext(List<Photo> photos) {
-
+                        view.showPhotos(photos);
                     }
 
                     @Override
