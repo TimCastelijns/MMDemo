@@ -2,6 +2,8 @@ package com.castelijns.mmdemo.photos;
 
 import com.castelijns.mmdemo.models.Photo;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -32,6 +34,7 @@ public class PhotosPresenter implements PhotosContract.Presenter {
 
                     @Override
                     public void onNext(List<Photo> photos) {
+                        Collections.sort(photos);
                         view.showPhotos(photos);
                     }
 
