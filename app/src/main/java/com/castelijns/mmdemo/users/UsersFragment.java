@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.castelijns.mmdemo.R;
 import com.castelijns.mmdemo.app.BaseFragment;
+import com.castelijns.mmdemo.models.User;
 
 import java.util.ArrayList;
 import java.util.List;

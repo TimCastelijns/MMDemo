@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.castelijns.mmdemo.R;
+import com.castelijns.mmdemo.models.User;
 
 import java.util.List;
 

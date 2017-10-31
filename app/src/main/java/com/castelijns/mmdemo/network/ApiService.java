@@ -1,7 +1,7 @@
 package com.castelijns.mmdemo.network;
 
 import com.castelijns.mmdemo.models.Album;
-import com.castelijns.mmdemo.users.User;
+import com.castelijns.mmdemo.models.User;
 
 import java.util.List;
 

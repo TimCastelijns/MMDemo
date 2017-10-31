@@ -1,4 +1,4 @@
-package com.castelijns.mmdemo.users;
+package com.castelijns.mmdemo.models;
 
 public class Company {
 

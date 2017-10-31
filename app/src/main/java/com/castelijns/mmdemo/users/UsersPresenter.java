@@ -1,14 +1,13 @@
 package com.castelijns.mmdemo.users;
 
+import com.castelijns.mmdemo.models.User;
+
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class UsersPresenter implements UsersContract.Presenter {
