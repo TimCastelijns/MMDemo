@@ -24,6 +24,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         @BindView(R.id.tv_name)
         TextView tvName;
 
+        @BindView(R.id.tv_username)
+        TextView tvUsername;
+
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -44,6 +47,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(UsersAdapter.ViewHolder holder, int position) {
         holder.tvName.setText(dataSet.get(position).getName());
+        holder.tvUsername.setText(dataSet.get(position).getUsername());
     }
 
     @Override
