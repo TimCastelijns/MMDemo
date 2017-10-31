@@ -1,6 +1,8 @@
 package com.castelijns.mmdemo.users;
 
-public class User {
+import android.support.annotation.NonNull;
+
+public class User implements Comparable<User> {
 
     private int id;
     private String name;
@@ -73,5 +75,10 @@ public class User {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    @Override
+    public int compareTo(@NonNull User o) {
+        return name.compareTo(o.getName());
     }
 }

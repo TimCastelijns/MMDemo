@@ -1,10 +1,14 @@
 package com.castelijns.mmdemo.users;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class UsersPresenter implements UsersContract.Presenter {
@@ -30,6 +34,7 @@ public class UsersPresenter implements UsersContract.Presenter {
 
                     @Override
                     public void onNext(List<User> users) {
+                        Collections.sort(users);
                         view.showUsers(users);
                     }
 
