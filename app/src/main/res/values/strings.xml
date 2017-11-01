@@ -16,4 +16,5 @@
     <string name="filter_albums_title">Filter albums</string>
     <string name="filter_albums_message">Pick an album id to filter on</string>
     <string name="cancel">Cancel</string>
+    <string name="show_photos">Show photos</string>
 </resources>
