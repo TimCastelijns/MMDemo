@@ -1,10 +1,15 @@
 package com.castelijns.mmdemo.photos;
 
+import android.util.SparseArray;
+
 import com.castelijns.mmdemo.models.Photo;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -25,17 +30,28 @@ public class PhotosPresenter implements PhotosContract.Presenter {
     public void start() {
         repo.getAllPhotos()
                 .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.computation())
+                .map(photos -> {
+                    // Split albums by albumId.
+                    SparseArray<List<Photo>> albumPhotos = new SparseArray<>();
+                    for (Photo photo : photos) {
+                        List<Photo> photoList = albumPhotos.get(photo.getAlbumId(), new ArrayList<>());
+                        photoList.add(photo);
+
+                        albumPhotos.append(photo.getAlbumId(), photoList);
+                    }
+                    return albumPhotos;
+                })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<Photo>>() {
+                .subscribe(new Observer<SparseArray<List<Photo>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(List<Photo> photos) {
-                        Collections.sort(photos);
-                        view.showPhotos(photos);
+                    public void onNext(SparseArray<List<Photo>> albumPhotos) {
+                        view.showPhotos(albumPhotos);
                     }
 
                     @Override
