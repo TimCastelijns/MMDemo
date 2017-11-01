@@ -8,6 +8,8 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiService {
 
@@ -16,6 +18,9 @@ public interface ApiService {
 
     @GET("photos")
     Observable<List<Photo>> getAllPhotos();
+
+    @GET("photos")
+    Observable<List<Photo>> getAllPhotosForAlbumId(@Query("albumId") int albumId);
 
     @GET("users")
     Observable<List<User>> getAllUsers();

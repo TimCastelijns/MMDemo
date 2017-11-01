@@ -82,4 +82,36 @@ public class PhotosPresenter implements PhotosContract.Presenter {
     public void onPhotoClicked(Photo photo, ImageView ivPhoto) {
         view.showPhotoDetail(photo, ivPhoto);
     }
+
+    @Override
+    public void filterAlbums(int albumId) {
+        repo.getAllPhotosForAlbumId(albumId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<Photo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<Photo> photos) {
+                        SparseArray<List<Photo>> albumPhotos = new SparseArray<>();
+                        albumPhotos.append(photos.get(0).getAlbumId(), photos);
+
+                        view.showPhotos(albumPhotos);
+                        view.showPhotoCount(photos.size(), 1);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 }

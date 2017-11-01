@@ -5,13 +5,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,6 +50,7 @@ public class PhotosFragment extends BaseFragment implements PhotosContract.View 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
         // Calculate how wide one col is allowed to be.
         DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -87,7 +91,30 @@ public class PhotosFragment extends BaseFragment implements PhotosContract.View 
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.action_filter).setVisible(true);
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    public void filterActionClicked() {
+        View view = getLayoutInflater().inflate(R.layout.dialog_input, null);
+        new AlertDialog.Builder(getContext())
+                .setTitle(R.string.filter_albums_title)
+                .setMessage(R.string.filter_albums_message)
+                .setView(view)
+                .setPositiveButton(R.string.filter, (dialog, which) -> {
+                    int albumId = Integer.parseInt(((EditText) view.findViewById(R.id.et_input))
+                            .getText().toString());
+                    presenter.filterAlbums(albumId);
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+    }
+
+    @Override
     public void showPhotos(SparseArray<List<Photo>> albumPhotos) {
+        sectionAdapter.removeAllSections();
+
         for (int i = 0; i < albumPhotos.size(); i++) {
             PhotoSection section = new PhotoSection(getActivity(), albumPhotos.keyAt(i),
                     albumPhotos.valueAt(i), itemWidth);

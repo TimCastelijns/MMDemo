@@ -19,5 +19,6 @@ public interface PhotosContract {
 
     interface Presenter extends BasePresenter {
         void onPhotoClicked(Photo photo, ImageView ivPhoto);
+        void filterAlbums(int albumId);
     }
 }

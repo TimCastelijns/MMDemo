@@ -29,4 +29,8 @@ class PhotosRepo {
     Observable<List<Photo>> getAllPhotos() {
         return apiService.getAllPhotos();
     }
+
+    Observable<List<Photo>> getAllPhotosForAlbumId(int albumId) {
+        return apiService.getAllPhotosForAlbumId(albumId);
+    }
 }

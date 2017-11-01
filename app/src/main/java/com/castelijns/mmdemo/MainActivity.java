@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.castelijns.mmdemo.albums.AlbumsFragment;
@@ -51,6 +52,22 @@ public class MainActivity extends BaseActivity {
 
         bnv.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigateToAlbums();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_photos, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_filter) {
+            photosFragment.filterActionClicked();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void navigateToAlbums() {
