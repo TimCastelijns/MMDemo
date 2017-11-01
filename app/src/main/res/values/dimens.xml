@@ -10,4 +10,5 @@
     <dimen name="row_padding_end">16dp</dimen>
     <dimen name="row_textview_height">24dp</dimen>
     <dimen name="row_divider_height">0.5dp</dimen>
+    <dimen name="bottom_nav_height">56dp</dimen>
 </resources>
