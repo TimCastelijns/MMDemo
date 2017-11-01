@@ -3,4 +3,7 @@
     <string name="title_albums">Albums</string>
     <string name="title_photos">Photos</string>
     <string name="title_users">Users</string>
+
+    <string name="address">Address</string>
+    <string name="company">Company</string>
 </resources>

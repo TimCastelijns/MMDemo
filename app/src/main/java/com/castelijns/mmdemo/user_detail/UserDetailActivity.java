@@ -24,6 +24,30 @@ public class UserDetailActivity extends BaseActivity implements UserDetailContra
     @BindView(R.id.tv_email)
     TextView tvEmail;
 
+    @BindView(R.id.tv_phone)
+    TextView tvPhone;
+
+    @BindView(R.id.tv_website)
+    TextView tvWebsite;
+
+    @BindView(R.id.tv_city)
+    TextView tvCity;
+
+    @BindView(R.id.tv_address)
+    TextView tvAddress;
+
+    @BindView(R.id.tv_zipcode)
+    TextView tvZipcode;
+
+    @BindView(R.id.tv_company_name)
+    TextView tvCompanyName;
+
+    @BindView(R.id.tv_company_catchphrase)
+    TextView tvCompanyCatchphrase;
+
+    @BindView(R.id.tv_company_bs)
+    TextView tvCompanyBusinessStatement;
+
     private UserDetailContract.Presenter presenter;
 
     @Override
@@ -49,6 +73,18 @@ public class UserDetailActivity extends BaseActivity implements UserDetailContra
 
         supportStartPostponedEnterTransition();
         // end.
+
+        tvPhone.setText(user.getPhone());
+        tvWebsite.setText(user.getWebsite());
+
+        tvCity.setText(user.getAddress().getCity());
+        tvAddress.setText(String.format("%s, %s", user.getAddress().getStreet(),
+                user.getAddress().getSuite()));
+        tvZipcode.setText(user.getAddress().getZipcode());
+
+        tvCompanyName.setText(user.getCompany().getName());
+        tvCompanyCatchphrase.setText(user.getCompany().getCatchPhrase());
+        tvCompanyBusinessStatement.setText(user.getCompany().getBs());
 
         presenter = new UserDetailPresenter(this);
     }
