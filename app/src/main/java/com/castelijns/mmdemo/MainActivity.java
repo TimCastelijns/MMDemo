@@ -7,15 +7,19 @@ import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.castelijns.mmdemo.albums.AlbumsAdapter;
 import com.castelijns.mmdemo.albums.AlbumsFragment;
 import com.castelijns.mmdemo.app.BaseActivity;
+import com.castelijns.mmdemo.models.Album;
 import com.castelijns.mmdemo.photos.PhotosFragment;
 import com.castelijns.mmdemo.users.UsersFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements AlbumsAdapter.ItemClickListener {
+
+    public static final String EXTRA_ALBUM_ID = "album_id";
 
     @BindView(R.id.bnv)
     BottomNavigationView bnv;
@@ -25,24 +29,20 @@ public class MainActivity extends BaseActivity {
     private UsersFragment usersFragment;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_albums:
-                    navigateToAlbums();
-                    return true;
-                case R.id.navigation_photos:
-                    navigateToPhotos();
-                    return true;
-                case R.id.navigation_users:
-                    navigateToUsers();
-                    return true;
-            }
-            return false;
-        }
-    };
+            = item -> {
+                switch (item.getItemId()) {
+                    case R.id.navigation_albums:
+                        navigateToAlbums();
+                        return true;
+                    case R.id.navigation_photos:
+                        navigateToPhotos();
+                        return true;
+                    case R.id.navigation_users:
+                        navigateToUsers();
+                        return true;
+                }
+                return false;
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +73,7 @@ public class MainActivity extends BaseActivity {
     private void navigateToAlbums() {
         if (albumsFragment == null) {
             albumsFragment = new AlbumsFragment();
+            albumsFragment.setShowPhotosClickedListener(this);
         }
         changeFragment(albumsFragment);
     }
@@ -81,6 +82,18 @@ public class MainActivity extends BaseActivity {
         if (photosFragment == null) {
             photosFragment = new PhotosFragment();
         }
+        changeFragment(photosFragment);
+    }
+
+    private void navigateToPhotosWithAlbumFilter(int albumId) {
+        if (photosFragment == null) {
+            photosFragment = new PhotosFragment();
+        }
+
+        Bundle args = new Bundle();
+        args.putInt(EXTRA_ALBUM_ID, albumId);
+        photosFragment.setArguments(args);
+
         changeFragment(photosFragment);
     }
 
@@ -96,5 +109,10 @@ public class MainActivity extends BaseActivity {
                 .beginTransaction()
                 .replace(R.id.container, newFragment)
                 .commit();
+    }
+
+    @Override
+    public void onShowPhotosClicked(Album album) {
+        navigateToPhotosWithAlbumFilter(album.getId());
     }
 }

@@ -31,6 +31,7 @@ public class AlbumsFragment extends BaseFragment implements AlbumsContract.View 
 
     private AlbumsAdapter adapter;
     private List<Album> albums;
+    private AlbumsAdapter.ItemClickListener itemClickListener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,11 +52,16 @@ public class AlbumsFragment extends BaseFragment implements AlbumsContract.View 
 
         albums = new ArrayList<>();
         adapter = new AlbumsAdapter(getContext(), albums);
+        adapter.setItemClickListener(itemClickListener);
         rvAlbums.setLayoutManager(new LinearLayoutManager(getContext()));
         rvAlbums.setHasFixedSize(true);
         rvAlbums.setAdapter(adapter);
 
         presenter.start();
+    }
+
+    public void setShowPhotosClickedListener(AlbumsAdapter.ItemClickListener listener) {
+        itemClickListener = listener;
     }
 
     @Override

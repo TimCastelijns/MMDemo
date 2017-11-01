@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.castelijns.mmdemo.MainActivity;
 import com.castelijns.mmdemo.R;
 import com.castelijns.mmdemo.app.BaseFragment;
 import com.castelijns.mmdemo.models.Photo;
@@ -87,7 +88,14 @@ public class PhotosFragment extends BaseFragment implements PhotosContract.View 
 
         rvPhotos.setLayoutManager(gridLayoutManager);
 
-        presenter.start();
+        // If args were passed, presenter should start by doing something different from default.
+        Bundle args = getArguments();
+        if (args != null) {
+            int albumId = getArguments().getInt(MainActivity.EXTRA_ALBUM_ID);
+            presenter.start(albumId);
+        } else {
+            presenter.start();
+        }
     }
 
     @Override

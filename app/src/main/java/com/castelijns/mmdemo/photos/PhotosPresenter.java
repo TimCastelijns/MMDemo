@@ -74,6 +74,11 @@ public class PhotosPresenter implements PhotosContract.Presenter {
     }
 
     @Override
+    public void start(int albumId) {
+        filterAlbums(albumId);
+    }
+
+    @Override
     public void stop() {
 
     }
