@@ -1,10 +1,8 @@
 package com.castelijns.mmdemo.photos;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.SparseArray;
@@ -17,10 +15,8 @@ import com.castelijns.mmdemo.R;
 import com.castelijns.mmdemo.app.BaseFragment;
 import com.castelijns.mmdemo.models.Photo;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import butterknife.BindView;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
@@ -39,8 +35,6 @@ public class PhotosFragment extends BaseFragment implements PhotosContract.View 
 
     private SectionedRecyclerViewAdapter sectionAdapter;
     private int itemWidth;
-    private PhotosAdapter adapter;
-    private List<Photo> photos;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
