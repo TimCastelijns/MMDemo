@@ -7,4 +7,6 @@
     <string name="address">Address</string>
     <string name="company">Company</string>
     <string name="album">Album</string>
+    <string name="by">By</string>
+    <string name="unknown">Unknown</string>
 </resources>
