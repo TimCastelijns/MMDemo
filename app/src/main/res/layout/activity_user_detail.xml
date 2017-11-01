@@ -130,6 +130,7 @@
                         android:src="@drawable/ic_public_black" />
 
                     <TextView
+                        android:autoLink="web"
                         android:id="@+id/tv_website"
                         android:layout_width="match_parent"
                         android:layout_height="24dp"
