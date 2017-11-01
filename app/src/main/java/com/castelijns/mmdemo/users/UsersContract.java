@@ -12,6 +12,7 @@ public interface UsersContract {
 
     interface View extends BaseView {
         void showUsers(List<User> users);
+        void showUserCount(int count);
         void showUserDetail(User user, TextView tvUsername, TextView tvEmail);
     }
 

@@ -20,6 +20,7 @@ import com.castelijns.mmdemo.user_detail.UserDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 
@@ -28,6 +29,9 @@ public class UsersFragment extends BaseFragment implements UsersContract.View {
     public static final String EXTRA_USER = "extra_user";
     public static final String EXTRA_USERNAME_TRANSITION = "extra_username_transition";
     public static final String EXTRA_EMAIL_TRANSITION = "extra_email_transition";
+
+    @BindView(R.id.tv_header)
+    TextView tvHeader;
 
     @BindView(R.id.rv_users)
     RecyclerView rvUsers;
@@ -70,6 +74,12 @@ public class UsersFragment extends BaseFragment implements UsersContract.View {
     public void showUsers(List<User> users) {
         this.users.addAll(users);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showUserCount(int count) {
+        tvHeader.setText(String.format(Locale.getDefault(),
+                "%d %s", count, getString(R.string.header_users)));
     }
 
     @Override

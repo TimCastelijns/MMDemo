@@ -11,4 +11,5 @@
     <string name="unknown">Unknown</string>
     <string name="header_albums">Albums</string>
     <string name="header_photos">Photos</string>
+    <string name="header_users">Users</string>
 </resources>

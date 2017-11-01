@@ -37,6 +37,7 @@ public class UsersPresenter implements UsersContract.Presenter {
                     public void onNext(List<User> users) {
                         Collections.sort(users);
                         view.showUsers(users);
+                        view.showUserCount(users.size());
                     }
 
                     @Override
