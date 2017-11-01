@@ -96,11 +96,16 @@ public class PhotosPresenter implements PhotosContract.Presenter {
 
                     @Override
                     public void onNext(List<Photo> photos) {
-                        SparseArray<List<Photo>> albumPhotos = new SparseArray<>();
-                        albumPhotos.append(photos.get(0).getAlbumId(), photos);
+                        if (photos.size() > 0) {
+                            SparseArray<List<Photo>> albumPhotos = new SparseArray<>();
+                            albumPhotos.append(photos.get(0).getAlbumId(), photos);
 
-                        view.showPhotos(albumPhotos);
-                        view.showPhotoCount(photos.size(), 1);
+                            view.showPhotos(albumPhotos);
+                            view.showPhotoCount(photos.size(), 1);
+                        } else {
+                            view.showPhotos(new SparseArray<>());
+                            view.showPhotoCount(0, 0);
+                        }
                     }
 
                     @Override
