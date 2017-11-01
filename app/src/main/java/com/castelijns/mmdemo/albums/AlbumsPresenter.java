@@ -35,6 +35,7 @@ public class AlbumsPresenter implements AlbumsContract.Presenter {
                     public void onNext(List<Album> albums) {
                         Collections.sort(albums);
                         view.showAlbums(albums);
+                        view.showAlbumCount(albums.size());
                     }
 
                     @Override

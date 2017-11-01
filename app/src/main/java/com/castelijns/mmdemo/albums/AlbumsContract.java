@@ -10,6 +10,7 @@ public interface AlbumsContract {
 
     interface View extends BaseView {
         void showAlbums(List<Album> albums);
+        void showAlbumCount(int count);
     }
 
     interface Presenter extends BasePresenter {
