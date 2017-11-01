@@ -155,7 +155,7 @@
                 android:orientation="vertical"
                 android:paddingBottom="16dp">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:orientation="horizontal"
@@ -165,12 +165,22 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="24dp"
-                        android:layout_gravity="center_vertical"
+                        android:layout_centerVertical="true"
                         android:text="@string/address"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/colorPrimary" />
 
-                </LinearLayout>
+                    <ImageButton
+                        android:id="@+id/ib_directions"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:src="@drawable/ic_directions_black"
+                        android:tint="@color/colorPrimary" />
+
+                </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"

@@ -1,9 +1,12 @@
 package com.castelijns.mmdemo.user_detail;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.castelijns.mmdemo.R;
@@ -12,6 +15,7 @@ import com.castelijns.mmdemo.models.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.castelijns.mmdemo.users.UsersFragment.EXTRA_EMAIL_TRANSITION;
 import static com.castelijns.mmdemo.users.UsersFragment.EXTRA_USER;
@@ -58,6 +62,7 @@ public class UserDetailActivity extends BaseActivity implements UserDetailContra
         ButterKnife.bind(this);
 
         User user = getIntent().getParcelableExtra(EXTRA_USER);
+        presenter = new UserDetailPresenter(this, user);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -87,7 +92,7 @@ public class UserDetailActivity extends BaseActivity implements UserDetailContra
         tvCompanyCatchphrase.setText(user.getCompany().getCatchPhrase());
         tvCompanyBusinessStatement.setText(user.getCompany().getBs());
 
-        presenter = new UserDetailPresenter(this);
+        presenter.start();
     }
 
     @Override
@@ -98,5 +103,18 @@ public class UserDetailActivity extends BaseActivity implements UserDetailContra
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showNavigationTo(String lat, String lon) {
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                Uri.parse(String.format("https://www.google.com/maps/dir/?api=1&destination=%s,%s",
+                        lat, lon)));
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.ib_directions)
+    void ibDirectionsClicked() {
+        presenter.onDirectionsClicked();
     }
 }

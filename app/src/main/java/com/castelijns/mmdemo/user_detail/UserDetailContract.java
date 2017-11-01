@@ -6,10 +6,10 @@ import com.castelijns.mmdemo.app.BaseView;
 public interface UserDetailContract {
 
     interface View extends BaseView {
-
+        void showNavigationTo(String lat, String lon);
     }
 
     interface Presenter extends BasePresenter {
-
+        void onDirectionsClicked();
     }
 }
