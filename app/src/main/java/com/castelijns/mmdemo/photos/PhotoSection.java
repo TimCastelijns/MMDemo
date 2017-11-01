@@ -1,6 +1,7 @@
 package com.castelijns.mmdemo.photos;
 
 import android.content.Context;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,6 +20,8 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
 public class PhotoSection extends StatelessSection {
+
+    private ItemClickListener itemClickListener;
 
     private Context context;
     private int albumId;
@@ -48,9 +51,10 @@ public class PhotoSection extends StatelessSection {
 
     @Override
     public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
+        final Photo photo = photos.get(position);
         final ItemViewHolder itemHolder = (ItemViewHolder) holder;
 
-        String thumbnailurl = photos.get(position).getThumbnailUrl();
+        String thumbnailurl = photo.getThumbnailUrl();
 
         itemHolder.ivPhoto.getLayoutParams().width = itemWidth;
         itemHolder.ivPhoto.getLayoutParams().height= itemWidth;
@@ -60,12 +64,15 @@ public class PhotoSection extends StatelessSection {
                 .load(thumbnailurl)
                 .into(itemHolder.ivPhoto);
 
-        itemHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+        itemHolder.itemView.setOnClickListener(v -> {
+            if (itemClickListener != null) {
+                itemClickListener.onClick(photo, itemHolder.ivPhoto);
             }
         });
+
+        // For shared element transitions.
+        ViewCompat.setTransitionName(itemHolder.ivPhoto, String.format("%s.%s",
+                "title", photo.getTitle()));
     }
 
     @Override
@@ -101,5 +108,13 @@ public class PhotoSection extends StatelessSection {
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+    void setItemClickListener(ItemClickListener listener) {
+        itemClickListener = listener;
+    }
+
+    interface ItemClickListener {
+        void onClick(Photo photo, ImageView ivPhoto);
     }
 }

@@ -1,6 +1,7 @@
 package com.castelijns.mmdemo.photos;
 
 import android.util.SparseArray;
+import android.widget.ImageView;
 
 import com.castelijns.mmdemo.models.Photo;
 
@@ -75,5 +76,10 @@ public class PhotosPresenter implements PhotosContract.Presenter {
     @Override
     public void stop() {
 
+    }
+
+    @Override
+    public void onPhotoClicked(Photo photo, ImageView ivPhoto) {
+        view.showPhotoDetail(photo, ivPhoto);
     }
 }

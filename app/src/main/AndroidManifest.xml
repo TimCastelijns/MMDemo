@@ -25,6 +25,11 @@
         <activity
             android:name=".user_detail.UserDetailActivity"
             android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".photo_detail.PhotoDetailActivity"
+            android:parentActivityName=".MainActivity" />
+
     </application>
 
 </manifest>

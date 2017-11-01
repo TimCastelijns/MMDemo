@@ -1,14 +1,20 @@
 package com.castelijns.mmdemo.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-public class Photo implements Comparable<Photo> {
+public class Photo implements Comparable<Photo>, Parcelable {
 
     private int id;
     private int albumId;
     private String title;
     private String url;
     private String thumbnailUrl;
+
+
+    public Photo() {
+    }
 
     public int getId() {
         return id;
@@ -54,4 +60,38 @@ public class Photo implements Comparable<Photo> {
     public int compareTo(@NonNull Photo o) {
         return title.compareTo(o.getTitle());
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeInt(this.albumId);
+        dest.writeString(this.title);
+        dest.writeString(this.url);
+        dest.writeString(this.thumbnailUrl);
+    }
+
+    private Photo(Parcel in) {
+        this.id = in.readInt();
+        this.albumId = in.readInt();
+        this.title = in.readString();
+        this.url = in.readString();
+        this.thumbnailUrl = in.readString();
+    }
+
+    public static final Creator<Photo> CREATOR = new Creator<Photo>() {
+        @Override
+        public Photo createFromParcel(Parcel source) {
+            return new Photo(source);
+        }
+
+        @Override
+        public Photo[] newArray(int size) {
+            return new Photo[size];
+        }
+    };
 }

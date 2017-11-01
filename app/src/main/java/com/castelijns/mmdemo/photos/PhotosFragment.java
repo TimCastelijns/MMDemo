@@ -1,7 +1,10 @@
 package com.castelijns.mmdemo.photos;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -9,11 +12,13 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.castelijns.mmdemo.R;
 import com.castelijns.mmdemo.app.BaseFragment;
 import com.castelijns.mmdemo.models.Photo;
+import com.castelijns.mmdemo.photo_detail.PhotoDetailActivity;
 
 import java.util.List;
 import java.util.Locale;
@@ -24,6 +29,9 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapt
 public class PhotosFragment extends BaseFragment implements PhotosContract.View {
 
     public static final int PHOTOS_GRID_COLS = 5;
+
+    public static final String EXTRA_PHOTO = "extra_photo";
+    public static final String EXTRA_PHOTO_TRANSITION = "extra_photo_transition";
 
     @BindView(R.id.tv_header)
     TextView tvHeader;
@@ -81,8 +89,12 @@ public class PhotosFragment extends BaseFragment implements PhotosContract.View 
     @Override
     public void showPhotos(SparseArray<List<Photo>> albumPhotos) {
         for (int i = 0; i < albumPhotos.size(); i++) {
-            sectionAdapter.addSection(new PhotoSection(getActivity(), albumPhotos.keyAt(i),
-                    albumPhotos.valueAt(i), itemWidth));
+            PhotoSection section = new PhotoSection(getActivity(), albumPhotos.keyAt(i),
+                    albumPhotos.valueAt(i), itemWidth);
+            section.setItemClickListener((photo, ivPhoto) -> presenter.onPhotoClicked(
+                    photo, ivPhoto));
+
+            sectionAdapter.addSection(section);
         }
 
         rvPhotos.setAdapter(sectionAdapter);
@@ -93,5 +105,19 @@ public class PhotosFragment extends BaseFragment implements PhotosContract.View 
         tvHeader.setText(String.format(Locale.getDefault(),
                 "%d %s in %d %s", photoCount, getString(R.string.header_photos), albumCount,
                 getString(R.string.header_albums)));
+    }
+
+    @Override
+    public void showPhotoDetail(Photo photo, ImageView ivPhoto) {
+        String transitionName = ViewCompat.getTransitionName(ivPhoto);
+
+        Intent intent = new Intent(getContext(), PhotoDetailActivity.class);
+        intent.putExtra(EXTRA_PHOTO, photo);
+        intent.putExtra(EXTRA_PHOTO_TRANSITION, transitionName);
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                getActivity(), ivPhoto, transitionName);
+
+        startActivity(intent, options.toBundle());
     }
 }
