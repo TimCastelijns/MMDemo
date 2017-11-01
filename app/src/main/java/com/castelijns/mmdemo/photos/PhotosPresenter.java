@@ -52,6 +52,12 @@ public class PhotosPresenter implements PhotosContract.Presenter {
                     @Override
                     public void onNext(SparseArray<List<Photo>> albumPhotos) {
                         view.showPhotos(albumPhotos);
+
+                        int photoCount = 0;
+                        for (int i = 0; i < albumPhotos.size(); i++) {
+                            photoCount += albumPhotos.valueAt(i).size();
+                        }
+                        view.showPhotoCount(photoCount, albumPhotos.size());
                     }
 
                     @Override

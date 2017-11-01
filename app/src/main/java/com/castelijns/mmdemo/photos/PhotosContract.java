@@ -12,6 +12,7 @@ public interface PhotosContract {
 
     interface View extends BaseView {
         void showPhotos(SparseArray<List<Photo>> albumPhotos);
+        void showPhotoCount(int photoCount, int albumCount);
     }
 
     interface Presenter extends BasePresenter {

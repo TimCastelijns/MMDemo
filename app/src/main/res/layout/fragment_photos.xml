@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_header"
+        style="@style/TextViewSectionHeader"
+        android:text="@string/header_photos" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/row_divider_height"
+        android:background="@color/listDivider" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_photos"
@@ -10,4 +21,4 @@
 
     </android.support.v7.widget.RecyclerView>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

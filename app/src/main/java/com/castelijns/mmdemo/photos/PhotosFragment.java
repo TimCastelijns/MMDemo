@@ -11,6 +11,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.castelijns.mmdemo.R;
 import com.castelijns.mmdemo.app.BaseFragment;
@@ -18,6 +19,7 @@ import com.castelijns.mmdemo.models.Photo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -26,6 +28,9 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapt
 public class PhotosFragment extends BaseFragment implements PhotosContract.View {
 
     public static final int PHOTOS_GRID_COLS = 5;
+
+    @BindView(R.id.tv_header)
+    TextView tvHeader;
 
     @BindView(R.id.rv_photos)
     RecyclerView rvPhotos;
@@ -87,5 +92,12 @@ public class PhotosFragment extends BaseFragment implements PhotosContract.View 
         }
 
         rvPhotos.setAdapter(sectionAdapter);
+    }
+
+    @Override
+    public void showPhotoCount(int photoCount, int albumCount) {
+        tvHeader.setText(String.format(Locale.getDefault(),
+                "%d %s in %d %s", photoCount, getString(R.string.header_photos), albumCount,
+                getString(R.string.header_albums)));
     }
 }
