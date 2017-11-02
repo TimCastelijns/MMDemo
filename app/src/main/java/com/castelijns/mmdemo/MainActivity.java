@@ -82,6 +82,7 @@ public class MainActivity extends BaseActivity implements AlbumsAdapter.ItemClic
         if (photosFragment == null) {
             photosFragment = new PhotosFragment();
         }
+        photosFragment.setArguments(null);
         changeFragment(photosFragment);
     }
 
