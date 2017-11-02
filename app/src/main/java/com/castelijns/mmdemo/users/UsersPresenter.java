@@ -28,6 +28,7 @@ public class UsersPresenter implements UsersContract.Presenter {
     public void start() {
         repo.getAllUsers()
                 .subscribeOn(Schedulers.io())
+                .doOnNext(users -> repo.cacheData(users))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<User>>() {
                     @Override

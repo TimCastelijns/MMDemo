@@ -52,6 +52,10 @@ public class AlbumsPresenter implements AlbumsContract.Presenter {
 
                     return pair;
                 })
+                .doOnNext(pair -> {
+                    albumsRepo.cacheData(pair.albums);
+                    usersRepo.cacheData(pair.users);
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Pair>() {
                     @Override

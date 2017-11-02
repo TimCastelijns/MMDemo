@@ -37,6 +37,7 @@ public class PhotosPresenter implements PhotosContract.Presenter {
         repo.getAllPhotos()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
+                .doOnNext(photos -> repo.cacheData(photos))
                 .map(photos -> {
                     // Split albums by albumId.
                     SparseArray<List<Photo>> albumPhotos = new SparseArray<>();

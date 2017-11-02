@@ -1,6 +1,6 @@
 package com.castelijns.mmdemo.albums;
 
-
+import com.castelijns.mmdemo.app.SimpleCache;
 import com.castelijns.mmdemo.models.Album;
 import com.castelijns.mmdemo.network.ApiManager;
 import com.castelijns.mmdemo.network.ApiService;
@@ -9,7 +9,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
-class AlbumsRepo {
+class AlbumsRepo extends SimpleCache<Album> {
 
     private static AlbumsRepo instance = null;
 
@@ -28,6 +28,10 @@ class AlbumsRepo {
     }
 
     Observable<List<Album>> getAllAlbums() {
-        return apiService.getAllAlbums();
+        if (cache != null) {
+            return Observable.just(cache);
+        } else {
+            return apiService.getAllAlbums();
+        }
     }
 }

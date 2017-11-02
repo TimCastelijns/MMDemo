@@ -1,5 +1,6 @@
 package com.castelijns.mmdemo.users;
 
+import com.castelijns.mmdemo.app.SimpleCache;
 import com.castelijns.mmdemo.models.User;
 import com.castelijns.mmdemo.network.ApiManager;
 import com.castelijns.mmdemo.network.ApiService;
@@ -8,7 +9,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
-public class UsersRepo {
+public class UsersRepo extends SimpleCache<User> {
 
     private static UsersRepo instance = null;
 
@@ -27,6 +28,10 @@ public class UsersRepo {
     }
 
     public Observable<List<User>> getAllUsers() {
-        return apiService.getAllUsers();
+        if (cache != null) {
+            return Observable.just(cache);
+        } else {
+            return apiService.getAllUsers();
+        }
     }
 }
