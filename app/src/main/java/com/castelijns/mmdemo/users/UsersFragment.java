@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.castelijns.mmdemo.R;
-import com.castelijns.mmdemo.app.BaseFragment;
+import com.castelijns.mmdemo.app.BaseListFragment;
 import com.castelijns.mmdemo.models.User;
 import com.castelijns.mmdemo.user_detail.UserDetailActivity;
 
@@ -26,17 +26,11 @@ import java.util.Locale;
 
 import butterknife.BindView;
 
-public class UsersFragment extends BaseFragment implements UsersContract.View {
+public class UsersFragment extends BaseListFragment implements UsersContract.View {
 
     public static final String EXTRA_USER = "extra_user";
     public static final String EXTRA_USERNAME_TRANSITION = "extra_username_transition";
     public static final String EXTRA_EMAIL_TRANSITION = "extra_email_transition";
-
-    @BindView(R.id.tv_header)
-    TextView tvHeader;
-
-    @BindView(R.id.pb)
-    ProgressBar pb;
 
     @BindView(R.id.rv_users)
     RecyclerView rvUsers;
@@ -82,22 +76,6 @@ public class UsersFragment extends BaseFragment implements UsersContract.View {
     }
 
     @Override
-    public void showLoading() {
-        pb.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideLoading() {
-        pb.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showError() {
-        Toast.makeText(getContext(), R.string.error_retrieving_data, Toast.LENGTH_SHORT)
-                .show();
-    }
-
-    @Override
     public void showUsers(List<User> users) {
         this.users.addAll(users);
         adapter.notifyDataSetChanged();
@@ -105,8 +83,7 @@ public class UsersFragment extends BaseFragment implements UsersContract.View {
 
     @Override
     public void showUserCount(int count) {
-        tvHeader.setText(String.format(Locale.getDefault(),
-                "%d %s", count, getString(R.string.header_users)));
+        setHeaderText(String.format(Locale.getDefault(), "%d %s", count, getString(R.string.header_users)));
     }
 
     @Override

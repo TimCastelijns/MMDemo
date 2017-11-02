@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import com.castelijns.mmdemo.MainActivity;
 import com.castelijns.mmdemo.R;
-import com.castelijns.mmdemo.app.BaseFragment;
+import com.castelijns.mmdemo.app.BaseListFragment;
 import com.castelijns.mmdemo.models.Photo;
 import com.castelijns.mmdemo.photo_detail.PhotoDetailActivity;
 
@@ -32,18 +32,12 @@ import java.util.Locale;
 import butterknife.BindView;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
-public class PhotosFragment extends BaseFragment implements PhotosContract.View {
+public class PhotosFragment extends BaseListFragment implements PhotosContract.View {
 
     public static final int PHOTOS_GRID_COLS = 5;
 
     public static final String EXTRA_PHOTO = "extra_photo";
     public static final String EXTRA_PHOTO_TRANSITION = "extra_photo_transition";
-
-    @BindView(R.id.tv_header)
-    TextView tvHeader;
-
-    @BindView(R.id.pb)
-    ProgressBar pb;
 
     @BindView(R.id.rv_photos)
     RecyclerView rvPhotos;
@@ -131,22 +125,6 @@ public class PhotosFragment extends BaseFragment implements PhotosContract.View 
     }
 
     @Override
-    public void showLoading() {
-        pb.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideLoading() {
-        pb.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showError() {
-        Toast.makeText(getContext(), R.string.error_retrieving_data, Toast.LENGTH_SHORT)
-                .show();
-    }
-
-    @Override
     public void clearList() {
         sectionAdapter.removeAllSections();
     }
@@ -169,7 +147,7 @@ public class PhotosFragment extends BaseFragment implements PhotosContract.View 
 
     @Override
     public void showPhotoCount(int photoCount, int albumCount) {
-        tvHeader.setText(String.format(Locale.getDefault(),
+        setHeaderText(String.format(Locale.getDefault(),
                 "%d %s in %d %s", photoCount, getString(R.string.header_photos), albumCount,
                 getString(R.string.header_albums)));
     }

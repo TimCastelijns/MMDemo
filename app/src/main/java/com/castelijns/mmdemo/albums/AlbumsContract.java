@@ -1,5 +1,6 @@
 package com.castelijns.mmdemo.albums;
 
+import com.castelijns.mmdemo.app.BaseListView;
 import com.castelijns.mmdemo.app.BasePresenter;
 import com.castelijns.mmdemo.app.BaseView;
 import com.castelijns.mmdemo.models.Album;
@@ -8,10 +9,7 @@ import java.util.List;
 
 public interface AlbumsContract {
 
-    interface View extends BaseView {
-        void showLoading();
-        void hideLoading();
-        void showError();
+    interface View extends BaseView, BaseListView {
         void showAlbums(List<Album> albums);
         void showAlbumCount(int count);
     }
