@@ -25,16 +25,18 @@ public class PhotoSection extends StatelessSection {
 
     private Context context;
     private int albumId;
+    private String albumName;
     private List<Photo> photos;
     private int itemWidth;
 
-    PhotoSection(Context context, int albumId, List<Photo> photos, int itemWidth) {
+    PhotoSection(Context context, int albumId, String albumName, List<Photo> photos, int itemWidth) {
         super(new SectionParameters.Builder(R.layout.photos_section_item)
                 .headerResourceId(R.layout.photos_section_header)
                 .build());
 
         this.context = context;
         this.albumId = albumId;
+        this.albumName = albumName;
         this.photos = photos;
         this.itemWidth = itemWidth;
     }
@@ -84,11 +86,15 @@ public class PhotoSection extends StatelessSection {
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder) {
         HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
 
-        headerHolder.tvTitle.setText(String.format(Locale.getDefault(),
+        headerHolder.tvId.setText(String.format(Locale.getDefault(),
                 "%s %d", context.getString(R.string.album), albumId));
+        headerHolder.tvTitle.setText(albumName);
     }
 
     class HeaderViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.tv_id)
+        TextView tvId;
 
         @BindView(R.id.tv_title)
         TextView tvTitle;

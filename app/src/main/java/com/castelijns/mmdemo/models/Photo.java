@@ -8,6 +8,7 @@ public class Photo implements Comparable<Photo>, Parcelable {
 
     private int id;
     private int albumId;
+    private String albumTitle;
     private String title;
     private String url;
     private String thumbnailUrl;
@@ -30,6 +31,14 @@ public class Photo implements Comparable<Photo>, Parcelable {
 
     public void setAlbumId(int albumId) {
         this.albumId = albumId;
+    }
+
+    public String getAlbumTitle() {
+        return albumTitle;
+    }
+
+    public void setAlbumTitle(String albumTitle) {
+        this.albumTitle = albumTitle;
     }
 
     public String getTitle() {

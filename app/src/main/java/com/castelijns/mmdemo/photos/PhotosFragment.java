@@ -155,7 +155,9 @@ public class PhotosFragment extends BaseFragment implements PhotosContract.View 
     public void showPhotos(SparseArray<List<Photo>> albumPhotos) {
         for (int i = 0; i < albumPhotos.size(); i++) {
             PhotoSection section = new PhotoSection(getActivity(), albumPhotos.keyAt(i),
-                    albumPhotos.valueAt(i), itemWidth);
+                    albumPhotos.valueAt(i).get(0).getAlbumTitle(), albumPhotos.valueAt(i),
+                    itemWidth);
+
             section.setItemClickListener((photo, ivPhoto) -> presenter.onPhotoClicked(
                     photo, ivPhoto));
 

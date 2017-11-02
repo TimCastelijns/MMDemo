@@ -3,15 +3,14 @@ package com.castelijns.mmdemo.photos;
 import android.util.SparseArray;
 import android.widget.ImageView;
 
+import com.castelijns.mmdemo.albums.AlbumsRepo;
+import com.castelijns.mmdemo.models.Album;
 import com.castelijns.mmdemo.models.Photo;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -20,13 +19,15 @@ import io.reactivex.schedulers.Schedulers;
 public class PhotosPresenter implements PhotosContract.Presenter {
 
     private PhotosContract.View view;
-    private PhotosRepo repo;
+    private PhotosRepo photosRepo;
+    private AlbumsRepo albumsRepo;
 
     private Disposable disposable;
 
     PhotosPresenter(PhotosContract.View view) {
         this.view = view;
-        repo = PhotosRepo.getInstance();
+        photosRepo = PhotosRepo.getInstance();
+        albumsRepo = AlbumsRepo.getInstance();
     }
 
     @Override
@@ -34,14 +35,35 @@ public class PhotosPresenter implements PhotosContract.Presenter {
         view.clearList();
         view.showLoading();
 
-        repo.getAllPhotos()
+        Observable.zip(photosRepo.getAllPhotos(), albumsRepo.getAllAlbums(),
+                (photos, albums) -> {
+                    Pair pair = new Pair();
+                    pair.photos = photos;
+                    pair.albums = albums;
+                    return pair;
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
-                .doOnNext(photos -> repo.cacheData(photos))
-                .map(photos -> {
+                .map(pair -> {
+                    // Assign album titles to photos;
+                    for (Photo photo : pair.photos) {
+                        for (Album album : pair.albums) {
+                            if (album.getId() == photo.getAlbumId()) {
+                                photo.setAlbumTitle(album.getTitle());
+                            }
+                        }
+                    }
+
+                    return pair;
+                })
+                .doOnNext(pair -> {
+                    photosRepo.cacheData(pair.photos);
+                    albumsRepo.cacheData(pair.albums);
+                })
+                .map(pair -> {
                     // Split albums by albumId.
                     SparseArray<List<Photo>> albumPhotos = new SparseArray<>();
-                    for (Photo photo : photos) {
+                    for (Photo photo : pair.photos) {
                         List<Photo> photoList = albumPhotos.get(photo.getAlbumId(), new ArrayList<>());
                         photoList.add(photo);
 
@@ -102,23 +124,38 @@ public class PhotosPresenter implements PhotosContract.Presenter {
         view.clearList();
         view.showLoading();
 
-        repo.getAllPhotosForAlbumId(albumId)
+        Observable.zip(photosRepo.getAllPhotosForAlbumId(albumId), albumsRepo.getAlbumById(albumId),
+                (photos, album) -> {
+                    Pair pair = new Pair();
+                    pair.photos = photos;
+                    pair.album = album;
+                    return pair;
+                })
                 .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.computation())
+                .map(pair -> {
+                    // Assign album title to photos;
+                    for (Photo photo : pair.photos) {
+                        photo.setAlbumTitle(pair.album.getTitle());
+                    }
+
+                    return pair;
+                })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<Photo>>() {
+                .subscribe(new Observer<Pair>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         disposable = d;
                     }
 
                     @Override
-                    public void onNext(List<Photo> photos) {
-                        if (photos.size() > 0) {
+                    public void onNext(Pair pair) {
+                        if (pair.photos.size() > 0) {
                             SparseArray<List<Photo>> albumPhotos = new SparseArray<>();
-                            albumPhotos.append(photos.get(0).getAlbumId(), photos);
+                            albumPhotos.append(pair.photos.get(0).getAlbumId(), pair.photos);
 
                             view.showPhotos(albumPhotos);
-                            view.showPhotoCount(photos.size(), 1);
+                            view.showPhotoCount(pair.photos.size(), 1);
                         } else {
                             view.showPhotos(new SparseArray<>());
                             view.showPhotoCount(0, 0);
@@ -136,5 +173,13 @@ public class PhotosPresenter implements PhotosContract.Presenter {
                         view.hideLoading();
                     }
                 });
+
+    }
+
+    private class Pair {
+        List<Photo> photos;
+        List<Album> albums;
+
+        Album album; // Only in case of filter.
     }
 }

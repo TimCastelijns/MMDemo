@@ -9,7 +9,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
-class AlbumsRepo extends SimpleCache<Album> {
+public class AlbumsRepo extends SimpleCache<Album> {
 
     private static AlbumsRepo instance = null;
 
@@ -19,7 +19,7 @@ class AlbumsRepo extends SimpleCache<Album> {
         apiService = ApiManager.getService();
     }
 
-    static AlbumsRepo getInstance() {
+    public static AlbumsRepo getInstance() {
         if (instance == null) {
             instance = new AlbumsRepo();
         }
@@ -27,7 +27,11 @@ class AlbumsRepo extends SimpleCache<Album> {
         return instance;
     }
 
-    Observable<List<Album>> getAllAlbums() {
+    public Observable<Album> getAlbumById(int albumId) {
+        return apiService.getAlbumsById(albumId).map(albums -> albums.get(0));
+    }
+
+    public Observable<List<Album>> getAllAlbums() {
         if (cache != null) {
             return Observable.just(cache);
         } else {
