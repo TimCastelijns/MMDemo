@@ -96,6 +96,10 @@ public class MainActivity extends BaseActivity implements AlbumsAdapter.ItemClic
         photosFragment.setArguments(args);
 
         changeFragment(photosFragment);
+
+        // Update the bottom nav selection manually. It does not update it automatically
+        // if fragments are replaced without being triggered by a tap on the item.
+        bnv.getMenu().findItem(R.id.navigation_photos).setChecked(true);
     }
 
     private void navigateToUsers() {
