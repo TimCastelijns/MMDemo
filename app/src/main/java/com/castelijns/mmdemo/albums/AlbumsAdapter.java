@@ -26,6 +26,9 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
         @BindView(R.id.tv_title)
         TextView tvTitle;
 
+        @BindView(R.id.tv_username)
+        TextView tvUserName;
+
         @BindView(R.id.btn_show_photos)
         Button btnShowPhotos;
 
@@ -48,7 +51,10 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.tvTitle.setText(dataSet.get(position).getTitle());
+        final Album album = dataSet.get(position);
+
+        holder.tvTitle.setText(album.getTitle());
+        holder.tvUserName.setText(album.getUserName());
         holder.btnShowPhotos.setOnClickListener(v -> {
             if (itemClickListener != null) {
                 itemClickListener.onShowPhotosClicked(dataSet.get(position));

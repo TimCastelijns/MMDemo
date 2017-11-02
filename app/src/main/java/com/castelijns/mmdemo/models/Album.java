@@ -6,6 +6,7 @@ public class Album implements Comparable<Album> {
 
     private int id;
     private int userId;
+    private String userName;
     private String title;
 
     public int getId() {
@@ -22,6 +23,14 @@ public class Album implements Comparable<Album> {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getTitle() {

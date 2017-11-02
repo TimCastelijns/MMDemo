@@ -8,7 +8,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
-class UsersRepo {
+public class UsersRepo {
 
     private static UsersRepo instance = null;
 
@@ -18,7 +18,7 @@ class UsersRepo {
         apiService = ApiManager.getService();
     }
 
-    static UsersRepo getInstance() {
+    public static UsersRepo getInstance() {
         if (instance == null) {
             instance = new UsersRepo();
         }
@@ -26,7 +26,7 @@ class UsersRepo {
         return instance;
     }
 
-    Observable<List<User>> getAllUsers() {
+    public Observable<List<User>> getAllUsers() {
         return apiService.getAllUsers();
     }
 }

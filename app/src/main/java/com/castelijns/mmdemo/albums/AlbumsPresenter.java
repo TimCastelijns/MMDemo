@@ -1,10 +1,13 @@
 package com.castelijns.mmdemo.albums;
 
 import com.castelijns.mmdemo.models.Album;
+import com.castelijns.mmdemo.models.User;
+import com.castelijns.mmdemo.users.UsersRepo;
 
 import java.util.Collections;
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -13,32 +16,53 @@ import io.reactivex.schedulers.Schedulers;
 public class AlbumsPresenter implements AlbumsContract.Presenter {
 
     private AlbumsContract.View view;
-    private AlbumsRepo repo;
+    private AlbumsRepo albumsRepo;
+    private UsersRepo usersRepo;
 
     private Disposable disposable;
 
     AlbumsPresenter(AlbumsContract.View view) {
         this.view = view;
-        repo = AlbumsRepo.getInstance();
+        albumsRepo = AlbumsRepo.getInstance();
+        usersRepo = UsersRepo.getInstance();
     }
 
     @Override
     public void start() {
         view.showLoading();
-        repo.getAllAlbums()
+        Observable.zip(albumsRepo.getAllAlbums(), usersRepo.getAllUsers(), (albums, users) -> {
+            Pair pair = new Pair();
+            pair.albums = albums;
+            pair.users = users;
+            return pair;
+        })
                 .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.computation())
+                .map(pair -> {
+                    Collections.sort(pair.albums);
+
+                    // Assign user names to albums.
+                    for (Album album : pair.albums) {
+                        for (User user : pair.users) {
+                            if (user.getId() == album.getUserId()) {
+                                album.setUserName(user.getName());
+                            }
+                        }
+                    }
+
+                    return pair;
+                })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<Album>>() {
+                .subscribe(new Observer<Pair>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         disposable = d;
                     }
 
                     @Override
-                    public void onNext(List<Album> albums) {
-                        Collections.sort(albums);
-                        view.showAlbums(albums);
-                        view.showAlbumCount(albums.size());
+                    public void onNext(Pair pair) {
+                        view.showAlbums(pair.albums);
+                        view.showAlbumCount(pair.albums.size());
                     }
 
                     @Override
@@ -59,5 +83,10 @@ public class AlbumsPresenter implements AlbumsContract.Presenter {
         if (!disposable.isDisposed()) {
             disposable.dispose();
         }
+    }
+
+    private class Pair {
+        List<Album> albums;
+        List<User> users;
     }
 }
