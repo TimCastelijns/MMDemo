@@ -104,6 +104,12 @@ public class PhotosFragment extends BaseFragment implements PhotosContract.View 
     }
 
     @Override
+    public void onDestroyView() {
+        presenter.stop();
+        super.onDestroyView();
+    }
+
+    @Override
     public void onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.action_filter).setVisible(true);
         super.onPrepareOptionsMenu(menu);

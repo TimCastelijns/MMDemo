@@ -76,6 +76,12 @@ public class UsersFragment extends BaseFragment implements UsersContract.View {
     }
 
     @Override
+    public void onDestroyView() {
+        presenter.stop();
+        super.onDestroyView();
+    }
+
+    @Override
     public void showLoading() {
         pb.setVisibility(View.VISIBLE);
     }

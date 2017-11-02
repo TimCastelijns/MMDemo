@@ -22,6 +22,8 @@ public class PhotosPresenter implements PhotosContract.Presenter {
     private PhotosContract.View view;
     private PhotosRepo repo;
 
+    private Disposable disposable;
+
     PhotosPresenter(PhotosContract.View view) {
         this.view = view;
         repo = PhotosRepo.getInstance();
@@ -50,7 +52,7 @@ public class PhotosPresenter implements PhotosContract.Presenter {
                 .subscribe(new Observer<SparseArray<List<Photo>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        disposable = d;
                     }
 
                     @Override
@@ -84,7 +86,9 @@ public class PhotosPresenter implements PhotosContract.Presenter {
 
     @Override
     public void stop() {
-
+        if (!disposable.isDisposed()) {
+            disposable.dispose();
+        }
     }
 
     @Override
@@ -103,7 +107,7 @@ public class PhotosPresenter implements PhotosContract.Presenter {
                 .subscribe(new Observer<List<Photo>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        disposable = d;
                     }
 
                     @Override

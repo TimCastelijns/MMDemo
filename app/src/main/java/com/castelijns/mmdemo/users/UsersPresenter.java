@@ -17,6 +17,8 @@ public class UsersPresenter implements UsersContract.Presenter {
     private UsersContract.View view;
     private UsersRepo repo;
 
+    private Disposable disposable;
+
     UsersPresenter(UsersContract.View view) {
         this.view = view;
         repo = UsersRepo.getInstance();
@@ -30,7 +32,7 @@ public class UsersPresenter implements UsersContract.Presenter {
                 .subscribe(new Observer<List<User>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        disposable = d;
                     }
 
                     @Override
@@ -54,7 +56,9 @@ public class UsersPresenter implements UsersContract.Presenter {
 
     @Override
     public void stop() {
-
+        if (!disposable.isDisposed()) {
+            disposable.dispose();
+        }
     }
 
     @Override

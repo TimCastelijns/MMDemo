@@ -15,6 +15,8 @@ public class AlbumsPresenter implements AlbumsContract.Presenter {
     private AlbumsContract.View view;
     private AlbumsRepo repo;
 
+    private Disposable disposable;
+
     AlbumsPresenter(AlbumsContract.View view) {
         this.view = view;
         repo = AlbumsRepo.getInstance();
@@ -29,7 +31,7 @@ public class AlbumsPresenter implements AlbumsContract.Presenter {
                 .subscribe(new Observer<List<Album>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        disposable = d;
                     }
 
                     @Override
@@ -54,6 +56,8 @@ public class AlbumsPresenter implements AlbumsContract.Presenter {
 
     @Override
     public void stop() {
-
+        if (!disposable.isDisposed()) {
+            disposable.dispose();
+        }
     }
 }

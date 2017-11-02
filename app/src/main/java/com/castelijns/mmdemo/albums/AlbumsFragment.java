@@ -65,6 +65,12 @@ public class AlbumsFragment extends BaseFragment implements AlbumsContract.View 
         presenter.start();
     }
 
+    @Override
+    public void onDestroyView() {
+        presenter.stop();
+        super.onDestroyView();
+    }
+
     public void setShowPhotosClickedListener(AlbumsAdapter.ItemClickListener listener) {
         itemClickListener = listener;
     }
