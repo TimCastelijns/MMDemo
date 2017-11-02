@@ -105,6 +105,7 @@ public class UserDetailActivity extends BaseActivity implements UserDetailContra
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void showNavigationTo(String lat, String lon) {
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW,

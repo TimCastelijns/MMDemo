@@ -7,7 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.castelijns.mmdemo.R;
 import com.castelijns.mmdemo.app.BaseFragment;
@@ -23,6 +25,9 @@ public class AlbumsFragment extends BaseFragment implements AlbumsContract.View 
 
     @BindView(R.id.tv_header)
     TextView tvHeader;
+
+    @BindView(R.id.pb)
+    ProgressBar pb;
 
     @BindView(R.id.rv_albums)
     RecyclerView rvAlbums;
@@ -62,6 +67,22 @@ public class AlbumsFragment extends BaseFragment implements AlbumsContract.View 
 
     public void setShowPhotosClickedListener(AlbumsAdapter.ItemClickListener listener) {
         itemClickListener = listener;
+    }
+
+    @Override
+    public void showLoading() {
+        pb.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        pb.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showError() {
+        Toast.makeText(getContext(), R.string.error_retrieving_data, Toast.LENGTH_SHORT)
+                .show();
     }
 
     @Override

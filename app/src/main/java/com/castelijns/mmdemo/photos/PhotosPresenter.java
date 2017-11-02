@@ -29,6 +29,9 @@ public class PhotosPresenter implements PhotosContract.Presenter {
 
     @Override
     public void start() {
+        view.clearList();
+        view.showLoading();
+
         repo.getAllPhotos()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
@@ -63,12 +66,13 @@ public class PhotosPresenter implements PhotosContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        view.hideLoading();
+                        view.showError();
                     }
 
                     @Override
                     public void onComplete() {
-
+                        view.hideLoading();
                     }
                 });
     }
@@ -90,6 +94,9 @@ public class PhotosPresenter implements PhotosContract.Presenter {
 
     @Override
     public void filterAlbums(int albumId) {
+        view.clearList();
+        view.showLoading();
+
         repo.getAllPhotosForAlbumId(albumId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -115,12 +122,13 @@ public class PhotosPresenter implements PhotosContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        view.hideLoading();
+                        view.showError();
                     }
 
                     @Override
                     public void onComplete() {
-
+                        view.hideLoading();
                     }
                 });
     }

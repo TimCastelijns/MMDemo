@@ -16,7 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.castelijns.mmdemo.MainActivity;
 import com.castelijns.mmdemo.R;
@@ -39,6 +41,9 @@ public class PhotosFragment extends BaseFragment implements PhotosContract.View 
 
     @BindView(R.id.tv_header)
     TextView tvHeader;
+
+    @BindView(R.id.pb)
+    ProgressBar pb;
 
     @BindView(R.id.rv_photos)
     RecyclerView rvPhotos;
@@ -120,9 +125,28 @@ public class PhotosFragment extends BaseFragment implements PhotosContract.View 
     }
 
     @Override
-    public void showPhotos(SparseArray<List<Photo>> albumPhotos) {
-        sectionAdapter.removeAllSections();
+    public void showLoading() {
+        pb.setVisibility(View.VISIBLE);
+    }
 
+    @Override
+    public void hideLoading() {
+        pb.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showError() {
+        Toast.makeText(getContext(), R.string.error_retrieving_data, Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    @Override
+    public void clearList() {
+        sectionAdapter.removeAllSections();
+    }
+
+    @Override
+    public void showPhotos(SparseArray<List<Photo>> albumPhotos) {
         for (int i = 0; i < albumPhotos.size(); i++) {
             PhotoSection section = new PhotoSection(getActivity(), albumPhotos.keyAt(i),
                     albumPhotos.valueAt(i), itemWidth);

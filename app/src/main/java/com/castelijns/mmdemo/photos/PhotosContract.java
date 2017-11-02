@@ -12,6 +12,10 @@ import java.util.List;
 public interface PhotosContract {
 
     interface View extends BaseView {
+        void showLoading();
+        void hideLoading();
+        void showError();
+        void clearList();
         void showPhotos(SparseArray<List<Photo>> albumPhotos);
         void showPhotoCount(int photoCount, int albumCount);
         void showPhotoDetail(Photo photo, ImageView ivPhoto);

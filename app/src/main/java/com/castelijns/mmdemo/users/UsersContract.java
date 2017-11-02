@@ -11,6 +11,9 @@ import java.util.List;
 public interface UsersContract {
 
     interface View extends BaseView {
+        void showLoading();
+        void hideLoading();
+        void showError();
         void showUsers(List<User> users);
         void showUserCount(int count);
         void showUserDetail(User user, TextView tvUsername, TextView tvEmail);

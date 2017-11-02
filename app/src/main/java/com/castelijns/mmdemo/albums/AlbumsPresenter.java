@@ -22,6 +22,7 @@ public class AlbumsPresenter implements AlbumsContract.Presenter {
 
     @Override
     public void start() {
+        view.showLoading();
         repo.getAllAlbums()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -40,12 +41,13 @@ public class AlbumsPresenter implements AlbumsContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        view.hideLoading();
+                        view.showError();
                     }
 
                     @Override
                     public void onComplete() {
-
+                        view.hideLoading();
                     }
                 });
     }
