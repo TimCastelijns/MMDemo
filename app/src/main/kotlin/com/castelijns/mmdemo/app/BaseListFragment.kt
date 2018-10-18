@@ -1,13 +1,8 @@
 package com.castelijns.mmdemo.app
 
 import android.view.View
-import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
-
 import com.castelijns.mmdemo.R
-
-import butterknife.BindView
 import kotlinx.android.synthetic.main.fragment_users.*
 
 abstract class BaseListFragment : BaseFragment(), BaseListView {

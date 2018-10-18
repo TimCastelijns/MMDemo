@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.MenuItem
-import butterknife.ButterKnife
 import com.bumptech.glide.Glide
 import com.castelijns.mmdemo.R
 import com.castelijns.mmdemo.app.BaseActivity
@@ -18,7 +17,6 @@ class PhotoDetailActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photo_detail)
-        ButterKnife.bind(this)
 
         val photo = intent.getParcelableExtra<Photo>(EXTRA_PHOTO)
 
