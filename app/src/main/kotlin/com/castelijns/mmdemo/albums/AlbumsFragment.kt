@@ -13,7 +13,7 @@ import java.util.*
 
 class AlbumsFragment : BaseListFragment(), AlbumsContract.View {
 
-    private lateinit var presenter: AlbumsContract.Presenter
+    private lateinit var presenter: AlbumsPresenter
 
     private lateinit var adapter: AlbumsAdapter
     private var albums: MutableList<Album>? = null

@@ -1,18 +1,15 @@
 package com.castelijns.mmdemo.userdetail
 
+import com.castelijns.mmdemo.app.BasePresenter
 import com.castelijns.mmdemo.models.User
 
-class UserDetailPresenter internal constructor(private val view: UserDetailContract.View, private val user: User) : UserDetailContract.Presenter {
+class UserDetailPresenter internal constructor(private val view: UserDetailContract.View, private val user: User) : BasePresenter() {
 
     override fun start() {
 
     }
 
-    override fun stop() {
-
-    }
-
-    override fun onDirectionsClicked() {
+    fun onDirectionsClicked() {
         view.showNavigationTo(user.address.geo["lat"]!!, user.address.geo["lon"]!!)
     }
 }

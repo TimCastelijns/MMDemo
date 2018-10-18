@@ -14,8 +14,4 @@ interface UsersContract {
         fun showUserCount(count: Int)
         fun showUserDetail(user: User, tvUsername: TextView, tvEmail: TextView)
     }
-
-    interface Presenter : BasePresenter {
-        fun onUserClicked(user: User, tvUsername: TextView, tvEmail: TextView)
-    }
 }

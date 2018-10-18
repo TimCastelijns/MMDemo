@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_user_detail.*
 
 class UserDetailActivity : BaseActivity(), UserDetailContract.View {
 
-    private lateinit var presenter: UserDetailContract.Presenter
+    private lateinit var presenter: UserDetailPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

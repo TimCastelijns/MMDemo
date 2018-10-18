@@ -1,7 +1,23 @@
 package com.castelijns.mmdemo.app
 
-interface BasePresenter {
+import androidx.annotation.CallSuper
+import kotlinx.coroutines.experimental.CoroutineScope
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.Job
+import kotlin.coroutines.experimental.CoroutineContext
 
-    fun start()
-    fun stop()
+abstract class BasePresenter : CoroutineScope {
+
+    protected val job = Job()
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+
+    abstract fun start()
+
+    @CallSuper
+    fun stop() {
+        job.cancel()
+    }
+
 }

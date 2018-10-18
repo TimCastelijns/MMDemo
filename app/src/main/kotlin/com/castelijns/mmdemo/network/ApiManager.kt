@@ -1,7 +1,7 @@
 package com.castelijns.mmdemo.network
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiManager {
@@ -11,7 +11,7 @@ object ApiManager {
     private val RETROFIT = Retrofit.Builder()
             .baseUrl(URL_BASE)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
 
     val service: ApiService = RETROFIT.create(ApiService::class.java)

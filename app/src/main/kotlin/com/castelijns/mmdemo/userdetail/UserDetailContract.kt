@@ -8,8 +8,4 @@ interface UserDetailContract {
     interface View : BaseView {
         fun showNavigationTo(lat: String, lon: String)
     }
-
-    interface Presenter : BasePresenter {
-        fun onDirectionsClicked()
-    }
 }

@@ -4,20 +4,29 @@ import com.castelijns.mmdemo.app.SimpleCache
 import com.castelijns.mmdemo.models.Photo
 import com.castelijns.mmdemo.network.ApiManager
 import com.castelijns.mmdemo.network.ApiService
-import io.reactivex.Observable
+import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.coroutineScope
 
 object PhotosRepo : SimpleCache<Photo>() {
 
     private var apiService: ApiService = ApiManager.service
 
-    val allPhotos: Observable<List<Photo>>
-        get() = if (cache != null) {
-            Observable.just(cache)
-        } else {
-            apiService.getAllPhotos()
-        }
+    suspend fun getAllPhotos(): Deferred<List<Photo>> = coroutineScope {
+        async { emptyList<Photo>() }
+    }
+//        get() = if (cache != null) {
+//            Observable.just(cache)
+//        } else {
+//            apiService.getAllPhotos()
+//        }
 
-    fun getAllPhotosForAlbumId(albumId: Int): Observable<List<Photo>> =
-            apiService.getAllPhotosForAlbumId(albumId)
+    suspend fun getAllPhotosForAlbumId(albumId: Int): Deferred<List<Photo>> =
+            coroutineScope {
+                async { emptyList<Photo>() }
+//                async {
+//                    apiService.getAllPhotosForAlbumId(albumId)
+//                }
+            }
 
 }

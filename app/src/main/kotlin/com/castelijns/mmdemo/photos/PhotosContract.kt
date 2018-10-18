@@ -17,9 +17,4 @@ interface PhotosContract {
         fun showPhotoDetail(photo: Photo, ivPhoto: ImageView)
     }
 
-    interface Presenter : BasePresenter {
-        fun start(albumId: Int)
-        fun onPhotoClicked(photo: Photo, ivPhoto: ImageView)
-        fun filterAlbums(albumId: Int)
-    }
 }

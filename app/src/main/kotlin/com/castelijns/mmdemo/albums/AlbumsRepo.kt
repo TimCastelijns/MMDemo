@@ -4,21 +4,26 @@ import com.castelijns.mmdemo.app.SimpleCache
 import com.castelijns.mmdemo.models.Album
 import com.castelijns.mmdemo.network.ApiManager
 import com.castelijns.mmdemo.network.ApiService
-
-import io.reactivex.Observable
+import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.coroutineScope
 
 object AlbumsRepo : SimpleCache<Album>() {
 
     private var apiService: ApiService = ApiManager.service
 
-    fun getAllAlbums(): Observable<List<Album>> =
-            if (cache != null) {
-                Observable.just(cache)
-            } else {
-                apiService.getAllAlbums()
-            }
+    suspend fun getAllAlbums(): Deferred<List<Album>> = coroutineScope {
+        async(Dispatchers.Main) {
+            cache ?: apiService.getAllAlbums().await()
+        }
+    }
 
-    fun getAlbumById(albumId: Int): Observable<Album> =
-            apiService.getAlbumsById(albumId).map { albums -> albums[0] }
+    suspend fun getAlbumById(albumId: Int): Deferred<Album> = coroutineScope {
+        async(Dispatchers.IO) {
+            val albums = apiService.getAlbumsById(albumId).await()
+            albums.first()
+        }
+    }
 
 }

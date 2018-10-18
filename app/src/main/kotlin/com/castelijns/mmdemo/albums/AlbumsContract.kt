@@ -12,5 +12,4 @@ interface AlbumsContract {
         fun showAlbumCount(count: Int)
     }
 
-    interface Presenter : BasePresenter
 }

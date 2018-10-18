@@ -25,7 +25,7 @@ import java.util.*
 
 class PhotosFragment : BaseListFragment(), PhotosContract.View {
 
-    private var presenter: PhotosContract.Presenter? = null
+    private var presenter: PhotosPresenter? = null
 
     private var sectionAdapter: SectionedRecyclerViewAdapter? = null
     private var itemWidth: Int = 0
