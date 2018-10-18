@@ -36,11 +36,10 @@ class PhotoSection(
 
     override fun onBindItemViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val photo = photos[position]
-        val itemHolder = holder as ItemViewHolder
 
         val thumbnailUrl = photo.thumbnailUrl
 
-        itemHolder.itemView.apply {
+        holder.itemView.iv_photo.apply {
             layoutParams.width = itemWidth
             layoutParams.height = itemWidth
             requestLayout()
@@ -48,16 +47,16 @@ class PhotoSection(
 
         Glide.with(context)
                 .load(thumbnailUrl)
-                .into(itemHolder.itemView.iv_photo)
+                .into(holder.itemView.iv_photo)
 
-        itemHolder.itemView.setOnClickListener { v ->
+        holder.itemView.setOnClickListener {
             if (itemClickListener != null) {
-                itemClickListener!!.onClick(photo, itemHolder.itemView.iv_photo)
+                itemClickListener!!.onClick(photo, holder.itemView.iv_photo)
             }
         }
 
         // For shared element transitions.
-        ViewCompat.setTransitionName(itemHolder.itemView.iv_photo, String.format("%s.%s",
+        ViewCompat.setTransitionName(holder.itemView.iv_photo, String.format("%s.%s",
                 "title", photo.title))
     }
 
@@ -77,7 +76,7 @@ class PhotoSection(
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
-    internal fun setItemClickListener(listener: ItemClickListener) {
+    fun setItemClickListener(listener: ItemClickListener) {
         itemClickListener = listener
     }
 

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.castelijns.mmdemo.MainActivity
 import com.castelijns.mmdemo.R
 import com.castelijns.mmdemo.app.BaseListFragment
+import com.castelijns.mmdemo.models.Album
 import com.castelijns.mmdemo.models.Photo
 import com.castelijns.mmdemo.photodetail.PhotoDetailActivity
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
@@ -102,19 +103,18 @@ class PhotosFragment : BaseListFragment(), PhotosContract.View {
         sectionAdapter!!.removeAllSections()
     }
 
-    override fun showPhotos(albumPhotos: SparseArray<List<Photo>>) {
-        for (i in 0 until albumPhotos.size()) {
-            val section = PhotoSection(activity!!, albumPhotos.keyAt(i),
-                    albumPhotos.valueAt(i)[0].albumTitle, albumPhotos.valueAt(i),
+    override fun showPhotosByAlbum(photosByAlbum: Map<Album, List<Photo>>) {
+        photosByAlbum.keys.forEach { album ->
+            val section = PhotoSection(activity!!, album.id, album.title, photosByAlbum[album]!!,
                     itemWidth)
 
-            section.setItemClickListener(object: PhotoSection.ItemClickListener {
+            section.setItemClickListener(object : PhotoSection.ItemClickListener {
                 override fun onClick(photo: Photo, ivPhoto: ImageView) {
                     presenter!!.onPhotoClicked(photo, ivPhoto)
                 }
             })
 
-            sectionAdapter!!.addSection(section)
+            sectionAdapter?.addSection(section)
         }
 
         rv_photos.adapter = sectionAdapter
