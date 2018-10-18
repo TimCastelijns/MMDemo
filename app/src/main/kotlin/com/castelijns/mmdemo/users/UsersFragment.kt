@@ -10,7 +10,7 @@ import android.widget.TextView
 import com.castelijns.mmdemo.R
 import com.castelijns.mmdemo.app.BaseListFragment
 import com.castelijns.mmdemo.models.User
-import com.castelijns.mmdemo.user_detail.UserDetailActivity
+import com.castelijns.mmdemo.userdetail.UserDetailActivity
 
 import java.util.ArrayList
 import java.util.Locale

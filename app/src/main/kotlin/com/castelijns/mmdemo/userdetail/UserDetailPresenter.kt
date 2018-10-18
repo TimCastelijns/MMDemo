@@ -1,4 +1,4 @@
-package com.castelijns.mmdemo.user_detail
+package com.castelijns.mmdemo.userdetail
 
 import com.castelijns.mmdemo.models.User
 

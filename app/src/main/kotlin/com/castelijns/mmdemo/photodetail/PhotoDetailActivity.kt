@@ -1,4 +1,4 @@
-package com.castelijns.mmdemo.photo_detail
+package com.castelijns.mmdemo.photodetail
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable

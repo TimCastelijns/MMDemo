@@ -1,6 +1,5 @@
 package com.castelijns.mmdemo.photos
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -19,7 +18,7 @@ import com.castelijns.mmdemo.MainActivity
 import com.castelijns.mmdemo.R
 import com.castelijns.mmdemo.app.BaseListFragment
 import com.castelijns.mmdemo.models.Photo
-import com.castelijns.mmdemo.photo_detail.PhotoDetailActivity
+import com.castelijns.mmdemo.photodetail.PhotoDetailActivity
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import kotlinx.android.synthetic.main.fragment_photos.*
 import java.util.*

@@ -24,12 +24,12 @@
         </activity>
 
         <activity
-            android:name=".user_detail.UserDetailActivity"
+            android:name=".userdetail.UserDetailActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".photo_detail.PhotoDetailActivity"
+            android:name=".photodetail.PhotoDetailActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
 

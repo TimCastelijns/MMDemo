@@ -1,4 +1,4 @@
-package com.castelijns.mmdemo.user_detail
+package com.castelijns.mmdemo.userdetail
 
 import android.content.Intent
 import android.net.Uri
