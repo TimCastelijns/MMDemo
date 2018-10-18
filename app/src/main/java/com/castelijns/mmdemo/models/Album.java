@@ -1,6 +1,6 @@
 package com.castelijns.mmdemo.models;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public class Album implements Comparable<Album> {
 
