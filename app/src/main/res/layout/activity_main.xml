@@ -19,7 +19,7 @@
         </FrameLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bnv"
+            android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bottom_nav_height"
             android:layout_alignParentBottom="true"
