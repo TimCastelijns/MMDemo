@@ -3,7 +3,6 @@ package com.castelijns.mmdemo.photos
 import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
@@ -36,9 +35,9 @@ class PhotosFragment : BaseListFragment(), PhotosContract.View {
         setHasOptionsMenu(true)
 
         // Calculate how wide one col is allowed to be.
-        val displaymetrics = DisplayMetrics()
-        activity!!.windowManager.defaultDisplay.getMetrics(displaymetrics)
-        itemWidth = displaymetrics.widthPixels / PHOTOS_GRID_COLS
+        val displayMetrics = DisplayMetrics()
+        activity!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        itemWidth = displayMetrics.widthPixels / PHOTOS_GRID_COLS
 
         presenter = PhotosPresenter(this)
     }
@@ -86,14 +85,14 @@ class PhotosFragment : BaseListFragment(), PhotosContract.View {
 
     fun filterActionClicked() {
         val view = layoutInflater.inflate(R.layout.dialog_input, null)
-        AlertDialog.Builder(getContext()!!)
+        AlertDialog.Builder(context)
                 .setTitle(R.string.filter_albums_title)
                 .setMessage(R.string.filter_albums_message)
                 .setView(view)
-                .setPositiveButton(R.string.filter) { dialog, which ->
+                .setPositiveButton(R.string.filter) { _, _ ->
                     val albumId = Integer.parseInt((view.findViewById<View>(R.id.et_input) as EditText)
                             .text.toString())
-                    presenter!!.filterAlbums(albumId)
+                    presenter!!.start(albumId)
                 }
                 .setNegativeButton(R.string.cancel, null)
                 .show()
@@ -129,7 +128,7 @@ class PhotosFragment : BaseListFragment(), PhotosContract.View {
     override fun showPhotoDetail(photo: Photo, ivPhoto: ImageView) {
         val transitionName = ViewCompat.getTransitionName(ivPhoto)
 
-        val intent = Intent(getContext(), PhotoDetailActivity::class.java)
+        val intent = Intent(context, PhotoDetailActivity::class.java)
         intent.putExtra(EXTRA_PHOTO, photo)
         intent.putExtra(EXTRA_PHOTO_TRANSITION, transitionName)
 
