@@ -41,7 +41,7 @@ class UsersFragment : BaseListFragment(), UsersContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        users = ArrayList()
+        users = mutableListOf()
         adapter = UsersAdapter(users!!)
         adapter!!.setItemClickListener(object : ItemClickListener {
             override fun onClick(user: User, tvUsername: TextView, tvEmail: TextView) {
@@ -53,7 +53,7 @@ class UsersFragment : BaseListFragment(), UsersContract.View {
         rv_users.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
-            adapter = adapter
+            adapter = this@UsersFragment.adapter
         }
 
         presenter!!.start()
