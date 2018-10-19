@@ -57,6 +57,6 @@ class AlbumsFragment : BaseListFragment(), AlbumsContract.View {
     }
 
     override fun showAlbumCount(count: Int) {
-        setHeaderText(String.format(Locale.getDefault(), "%d %s", count, getString(R.string.header_albums)))
+        setHeaderText(getString(R.string.header_albums, count))
     }
 }

@@ -51,7 +51,7 @@ class PhotosFragment : BaseListFragment(), PhotosContract.View {
 
         sectionAdapter = SectionedRecyclerViewAdapter()
 
-        val gridLayoutManager = GridLayoutManager(getContext(), PHOTOS_GRID_COLS)
+        val gridLayoutManager = GridLayoutManager(context, PHOTOS_GRID_COLS)
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return when (sectionAdapter!!.getSectionItemViewType(position)) {
@@ -66,7 +66,7 @@ class PhotosFragment : BaseListFragment(), PhotosContract.View {
         // If args were passed, presenter should start by doing something different from default.
         val args = arguments
         if (args != null) {
-            val albumId = arguments!!.getInt(MainActivity.EXTRA_ALBUM_ID)
+            val albumId = arguments!!.getInt(EXTRA_ALBUM_ID)
             presenter!!.start(albumId)
         } else {
             presenter!!.start()
@@ -85,7 +85,7 @@ class PhotosFragment : BaseListFragment(), PhotosContract.View {
 
     fun filterActionClicked() {
         val view = layoutInflater.inflate(R.layout.dialog_input, null)
-        AlertDialog.Builder(context)
+        AlertDialog.Builder(activity!!)
                 .setTitle(R.string.filter_albums_title)
                 .setMessage(R.string.filter_albums_message)
                 .setView(view)
@@ -120,9 +120,7 @@ class PhotosFragment : BaseListFragment(), PhotosContract.View {
     }
 
     override fun showPhotoCount(photoCount: Int, albumCount: Int) {
-        setHeaderText(String.format(Locale.getDefault(),
-                "%d %s in %d %s", photoCount, getString(R.string.header_photos), albumCount,
-                getString(R.string.header_albums)))
+        setHeaderText(getString(R.string.header_photos, photoCount, albumCount))
     }
 
     override fun showPhotoDetail(photo: Photo, ivPhoto: ImageView) {
@@ -141,7 +139,7 @@ class PhotosFragment : BaseListFragment(), PhotosContract.View {
     companion object {
 
         const val PHOTOS_GRID_COLS = 5
-
+        const val EXTRA_ALBUM_ID = "album_id"
         const val EXTRA_PHOTO = "extra_photo"
         const val EXTRA_PHOTO_TRANSITION = "extra_photo_transition"
     }

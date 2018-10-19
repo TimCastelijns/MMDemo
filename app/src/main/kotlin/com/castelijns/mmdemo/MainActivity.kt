@@ -3,23 +3,22 @@ package com.castelijns.mmdemo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.castelijns.mmdemo.albums.AlbumsFragment
-import com.castelijns.mmdemo.app.BaseActivity
+import com.castelijns.mmdemo.albums.ItemClickListener
 import com.castelijns.mmdemo.models.Album
 import com.castelijns.mmdemo.photos.PhotosFragment
+import com.castelijns.mmdemo.photos.PhotosFragment.Companion.EXTRA_ALBUM_ID
 import com.castelijns.mmdemo.users.UsersFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-
-import androidx.fragment.app.Fragment
-import com.castelijns.mmdemo.albums.ItemClickListener
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity(), ItemClickListener {
+class MainActivity : AppCompatActivity(), ItemClickListener {
 
-    private var albumsFragment: AlbumsFragment? = null
-    private var photosFragment: PhotosFragment? = null
-    private var usersFragment: UsersFragment? = null
+    private lateinit var albumsFragment: AlbumsFragment
+    private lateinit var photosFragment: PhotosFragment
+    private lateinit var usersFragment: UsersFragment
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -54,7 +53,7 @@ class MainActivity : BaseActivity(), ItemClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_filter) {
-            photosFragment!!.filterActionClicked()
+            photosFragment.filterActionClicked()
             return true
         }
 
@@ -62,31 +61,31 @@ class MainActivity : BaseActivity(), ItemClickListener {
     }
 
     private fun navigateToAlbums() {
-        if (albumsFragment == null) {
+        if (!this::albumsFragment.isInitialized) {
             albumsFragment = AlbumsFragment()
-            albumsFragment!!.setShowPhotosClickedListener(this)
+            albumsFragment.setShowPhotosClickedListener(this)
         }
-        changeFragment(albumsFragment!!)
+        changeFragment(albumsFragment)
     }
 
     private fun navigateToPhotos() {
-        if (photosFragment == null) {
+        if (!this::photosFragment.isInitialized) {
             photosFragment = PhotosFragment()
         }
-        photosFragment!!.arguments = null
-        changeFragment(photosFragment!!)
+        photosFragment.arguments = null
+        changeFragment(photosFragment)
     }
 
     private fun navigateToPhotosWithAlbumFilter(albumId: Int) {
-        if (photosFragment == null) {
+        if (!this::photosFragment.isInitialized) {
             photosFragment = PhotosFragment()
         }
 
         val args = Bundle()
         args.putInt(EXTRA_ALBUM_ID, albumId)
-        photosFragment!!.arguments = args
+        photosFragment.arguments = args
 
-        changeFragment(photosFragment!!)
+        changeFragment(photosFragment)
 
         // Update the bottom nav selection manually. It does not update it automatically
         // if fragments are replaced without being triggered by a tap on the item.
@@ -94,10 +93,10 @@ class MainActivity : BaseActivity(), ItemClickListener {
     }
 
     private fun navigateToUsers() {
-        if (usersFragment == null) {
+        if (!this::usersFragment.isInitialized) {
             usersFragment = UsersFragment()
         }
-        changeFragment(usersFragment!!)
+        changeFragment(usersFragment)
     }
 
     private fun changeFragment(newFragment: Fragment) {
@@ -111,7 +110,4 @@ class MainActivity : BaseActivity(), ItemClickListener {
         navigateToPhotosWithAlbumFilter(album.id)
     }
 
-    companion object {
-        const val EXTRA_ALBUM_ID = "album_id"
-    }
 }

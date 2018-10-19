@@ -12,7 +12,6 @@ import com.castelijns.mmdemo.app.BaseListFragment
 import com.castelijns.mmdemo.models.User
 import com.castelijns.mmdemo.userdetail.UserDetailActivity
 
-import java.util.ArrayList
 import java.util.Locale
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
@@ -70,7 +69,7 @@ class UsersFragment : BaseListFragment(), UsersContract.View {
     }
 
     override fun showUserCount(count: Int) {
-        setHeaderText(String.format(Locale.getDefault(), "%d %s", count, getString(R.string.header_users)))
+        setHeaderText(getString(R.string.header_users, count))
     }
 
     override fun showUserDetail(user: User, tvUsername: TextView, tvEmail: TextView) {

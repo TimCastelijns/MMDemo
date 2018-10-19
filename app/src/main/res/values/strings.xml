@@ -6,12 +6,16 @@
 
     <string name="address">Address</string>
     <string name="company">Company</string>
-    <string name="album">Album</string>
+    <string name="album">Album %1$d</string>
     <string name="by">By</string>
     <string name="unknown">Unknown</string>
-    <string name="header_albums">Albums</string>
-    <string name="header_photos">Photos</string>
-    <string name="header_users">Users</string>
+    <string name="header_albums_default">Albums</string>
+    <string name="header_albums">%1$d Albums</string>
+    <string name="header_photos_default">Photos</string>
+    <string name="header_photos">%1$d Photos in %2$d albums</string>
+    <string name="header_users_default">Users</string>
+    <string name="header_users">%1$d Users</string>
+    <string name="user_detail_address">%1$s %2$s</string>
     <string name="filter">Filter</string>
     <string name="filter_albums_title">Filter albums</string>
     <string name="filter_albums_message">Pick an album id to filter on</string>

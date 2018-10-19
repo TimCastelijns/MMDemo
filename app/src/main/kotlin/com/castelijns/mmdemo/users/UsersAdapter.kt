@@ -40,10 +40,8 @@ class UsersAdapter(
         }
 
         // For shared element transitions.
-        ViewCompat.setTransitionName(holder.itemView.tv_username, String.format(
-                "%s.%s", "username", user.username))
-        ViewCompat.setTransitionName(holder.itemView.tv_email, String.format(
-                "%s.%s", "email", user.email))
+        ViewCompat.setTransitionName(holder.itemView.tv_username, "username.$${user.username}")
+        ViewCompat.setTransitionName(holder.itemView.tv_email, "email.${user.email}")
     }
 
     override fun getItemCount(): Int {

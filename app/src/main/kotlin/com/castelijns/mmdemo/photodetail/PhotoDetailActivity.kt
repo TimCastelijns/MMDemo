@@ -4,15 +4,15 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.castelijns.mmdemo.R
-import com.castelijns.mmdemo.app.BaseActivity
 import com.castelijns.mmdemo.models.Photo
 import com.castelijns.mmdemo.photos.PhotosFragment.Companion.EXTRA_PHOTO
 import com.castelijns.mmdemo.photos.PhotosFragment.Companion.EXTRA_PHOTO_TRANSITION
 import kotlinx.android.synthetic.main.activity_photo_detail.*
 
-class PhotoDetailActivity : BaseActivity() {
+class PhotoDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

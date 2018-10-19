@@ -9,5 +9,11 @@ data class Address(
         val suite: String,
         val city: String,
         val zipcode: String,
-        val geo: Map<String, String>
+        val geo: Geo
+) : Parcelable
+
+@Parcelize
+data class Geo(
+        val lat: String,
+        val lng: String
 ) : Parcelable

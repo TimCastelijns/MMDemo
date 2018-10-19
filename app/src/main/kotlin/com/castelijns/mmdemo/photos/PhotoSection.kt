@@ -12,7 +12,6 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
 import kotlinx.android.synthetic.main.photos_section_header.view.*
 import kotlinx.android.synthetic.main.photos_section_item.view.*
-import java.util.*
 
 class PhotoSection(
         private val context: Context,
@@ -20,7 +19,8 @@ class PhotoSection(
         private val albumName: String,
         private val photos: List<Photo>,
         private val itemWidth: Int
-) : StatelessSection(SectionParameters.Builder(R.layout.photos_section_item)
+) : StatelessSection(SectionParameters.builder()
+        .itemResourceId(R.layout.photos_section_item)
         .headerResourceId(R.layout.photos_section_header)
         .build()) {
 
@@ -56,8 +56,7 @@ class PhotoSection(
         }
 
         // For shared element transitions.
-        ViewCompat.setTransitionName(holder.itemView.iv_photo, String.format("%s.%s",
-                "title", photo.title))
+        ViewCompat.setTransitionName(holder.itemView.iv_photo, "title.${photo.title}")
     }
 
     override fun getHeaderViewHolder(view: View): RecyclerView.ViewHolder {
@@ -67,8 +66,7 @@ class PhotoSection(
     override fun onBindHeaderViewHolder(holder: RecyclerView.ViewHolder) {
         val headerHolder = holder as HeaderViewHolder
 
-        headerHolder.itemView.tv_id.text = String.format(Locale.getDefault(),
-                "%s %d", context.getString(R.string.album), albumId)
+        headerHolder.itemView.tv_id.text = context.getString(R.string.album, albumId)
         headerHolder.itemView.tv_title.text = albumName
     }
 

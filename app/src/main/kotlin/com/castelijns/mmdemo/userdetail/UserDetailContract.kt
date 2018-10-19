@@ -1,11 +1,8 @@
 package com.castelijns.mmdemo.userdetail
 
-import com.castelijns.mmdemo.app.BasePresenter
-import com.castelijns.mmdemo.app.BaseView
-
 interface UserDetailContract {
 
-    interface View : BaseView {
+    interface View {
         fun showNavigationTo(lat: String, lon: String)
     }
 }

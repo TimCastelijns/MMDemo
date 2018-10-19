@@ -4,15 +4,15 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.castelijns.mmdemo.R
-import com.castelijns.mmdemo.app.BaseActivity
 import com.castelijns.mmdemo.models.User
 import com.castelijns.mmdemo.users.UsersFragment.Companion.EXTRA_EMAIL_TRANSITION
 import com.castelijns.mmdemo.users.UsersFragment.Companion.EXTRA_USER
 import com.castelijns.mmdemo.users.UsersFragment.Companion.EXTRA_USERNAME_TRANSITION
 import kotlinx.android.synthetic.main.activity_user_detail.*
 
-class UserDetailActivity : BaseActivity(), UserDetailContract.View {
+class UserDetailActivity : AppCompatActivity(), UserDetailContract.View {
 
     private lateinit var presenter: UserDetailPresenter
 
@@ -25,7 +25,7 @@ class UserDetailActivity : BaseActivity(), UserDetailContract.View {
 
         val actionBar = supportActionBar
         actionBar!!.setDisplayHomeAsUpEnabled(true)
-        actionBar.setTitle(user.name)
+        actionBar.title = user.name
 
         // For shared element transitions.
         supportPostponeEnterTransition()
@@ -43,7 +43,7 @@ class UserDetailActivity : BaseActivity(), UserDetailContract.View {
         tv_website.text = user.website
 
         tv_city.text = user.address.city
-        tv_address.text = String.format("%s, %s", user.address.street,
+        tv_address.text = getString(R.string.user_detail_address, user.address.street,
                 user.address.suite)
         tv_zipcode.text = user.address.zipcode
 
@@ -67,8 +67,7 @@ class UserDetailActivity : BaseActivity(), UserDetailContract.View {
 
     override fun showNavigationTo(lat: String, lon: String) {
         val intent = Intent(Intent.ACTION_VIEW,
-                Uri.parse(String.format("https://www.google.com/maps/dir/?api=1&destination=%s,%s",
-                        lat, lon)))
+                Uri.parse("https://www.google.com/maps/dir/?api=1&destination=$lat,$lon"))
         startActivity(intent)
     }
 

@@ -7,7 +7,7 @@
     <TextView
         android:id="@+id/tv_header"
         style="@style/TextViewSectionHeader"
-        android:text="@string/header_users" />
+        android:text="@string/header_users_default" />
 
     <View
         android:layout_width="match_parent"

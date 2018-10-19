@@ -7,7 +7,7 @@
     <TextView
         android:id="@+id/tv_header"
         style="@style/TextViewSectionHeader"
-        android:text="@string/header_albums" />
+        android:text="@string/header_albums_default" />
 
     <View
         android:layout_width="match_parent"
